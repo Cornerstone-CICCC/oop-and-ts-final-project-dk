@@ -1,0 +1,25 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Todo from "../components/Todo.astro";
+import InProgress from "../components/InProgress.astro";
+import Done from "../components/Done.astro";
+---
+
+<!-- Don't Layout component -->
+<Layout title="CICC bord">
+  <h1>CICC bord</h1>
+  <div class="bords">
+    <Todo />
+    <InProgress />
+    <Done />
+  </div>
+</Layout>
+
+<script></script>
+
+<style>
+  .bords {
+    display: flex;
+    gap: 1rem;
+  }
+</style>

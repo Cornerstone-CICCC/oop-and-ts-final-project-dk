@@ -1,0 +1,28 @@
+---
+import { TaskManager } from "../taskClass";
+const taskManager = new TaskManager();
+const tasks = JSON.stringify(taskManager.tasks);
+---
+
+<div>
+  Done
+  <button>test</button>
+  {tasks}
+</div>
+
+<script>
+  import { TaskManager } from "../taskClass";
+  const taskManager = new TaskManager();
+
+  const button = document.querySelector("button");
+  button?.addEventListener("click", () => {
+    taskManager.add({
+      status: "todo",
+      category: "category",
+      title: "test",
+      description: "test",
+      assignees: [{ firstName: "firstName", lastName: "lastName" }],
+    });
+    console.log(taskManager.tasks);
+  });
+</script>
