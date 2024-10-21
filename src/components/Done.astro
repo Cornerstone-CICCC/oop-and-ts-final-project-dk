@@ -1,28 +1,45 @@
----
-import { TaskManager } from "../taskClass";
-const taskManager = new TaskManager();
-const tasks = JSON.stringify(taskManager.tasks);
----
-
-<div>
-  Done
-  <button>test</button>
-  {tasks}
-</div>
+<!-- Wrap the component elements in our custom element “astro-heart”. -->
+<astro-heart>
+  <button aria-label="Heart">add</button>:<span>0</span>
+  <ul id="ul">
+    <li>test</li>
+  </ul>
+</astro-heart>
 
 <script>
   import { TaskManager } from "../taskClass";
   const taskManager = new TaskManager();
+  // Define the behaviour for our new type of HTML element.
+  class AstroHeart extends HTMLElement {
+    connectedCallback() {
+      let count = 0;
 
-  const button = document.querySelector("button");
-  button?.addEventListener("click", () => {
-    taskManager.add({
-      status: "todo",
-      category: "category",
-      title: "test",
-      description: "test",
-      assignees: [{ firstName: "firstName", lastName: "lastName" }],
-    });
-    console.log(taskManager.tasks);
-  });
+      const heartButton = this.querySelector("button");
+      const countSpan = this.querySelector("span");
+      const ul = this.querySelector("ul");
+      console.log(ul);
+
+      // Each time the button is clicked, update the count.
+      heartButton?.addEventListener("click", () => {
+        taskManager.add({
+          status: "todo",
+          category: "category",
+          title: "title",
+          description: "test",
+          assignees: [{ firstName: "firstName", lastName: "lastName" }],
+        });
+        console.log(taskManager.tasks);
+        count++;
+        if (countSpan === null) return;
+        countSpan.textContent = count.toString();
+        if (ul === null) return;
+        const li = document.createElement("li");
+        li.textContent = taskManager.tasks[0].title;
+        ul.appendChild(li);
+      });
+    }
+  }
+
+  // Tell the browser to use our AstroHeart class for <astro-heart> elements.
+  customElements.define("astro-heart", AstroHeart);
 </script>
