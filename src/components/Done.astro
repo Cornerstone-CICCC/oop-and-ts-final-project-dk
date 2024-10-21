@@ -12,14 +12,9 @@
   // Define the behaviour for our new type of HTML element.
   class AstroHeart extends HTMLElement {
     connectedCallback() {
-      let count = 0;
-
       const heartButton = this.querySelector("button");
-      const countSpan = this.querySelector("span");
       const ul = this.querySelector("ul");
-      console.log(ul);
 
-      // Each time the button is clicked, update the count.
       heartButton?.addEventListener("click", () => {
         taskManager.add({
           status: "todo",
@@ -29,9 +24,6 @@
           assignees: [{ firstName: "firstName", lastName: "lastName" }],
         });
         console.log(taskManager.tasks);
-        count++;
-        if (countSpan === null) return;
-        countSpan.textContent = count.toString();
         if (ul === null) return;
         const li = document.createElement("li");
         li.textContent = taskManager.tasks[0].title;
