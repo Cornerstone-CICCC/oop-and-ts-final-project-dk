@@ -4,6 +4,7 @@ import Todo from "../components/Todo.astro";
 import InProgress from "../components/InProgress.astro";
 import Done from "../components/Done.astro";
 import Header from "../components/Header.astro";
+import { Icon } from "astro-icon/components";
 ---
 
 <!-- Don't Layout component -->
@@ -15,13 +16,118 @@ import Header from "../components/Header.astro";
     <InProgress /> -->
     <Done />
   </div>
+  <div class="modal-add-task">
+    <div class="modal-add-task_header">
+      <h2>Add Task</h2>
+      <button id="modal-add-task_header_close-modal">
+        <Icon name="close" />
+      </button>
+    </div>
+    <form class="modal-add-task_form">
+      <div class="modal-add-task_form_container">
+        <label class="modal-add-task_form_container_lable">Title</label>
+        <input class="modal-add-task_form_container_widget" required />
+      </div>
+      <div class="modal-add-task_form_container">
+        <label class="modal-add-task_form_container_lable">Category</label>
+        <select required class="modal-add-task_form_container_widget">
+          <option selected disabled></option>
+          <option>DESIGN_SYSTEM</option>
+          <option>FRONTEND</option>
+          <option>BACKEND</option>
+          <option>DEVOPS</option>
+          <option>OTHER</option>
+        </select>
+      </div>
+      <div class="modal-add-task_form_container">
+        <label class="modal-add-task_form_container_lable">Description</label>
+        <textarea class="modal-add-task_form_container_description" required
+        ></textarea>
+      </div>
+      <div class="modal-add-task_form_container">
+        <label class="modal-add-task_form_container_lable">Status</label>
+        <select required class="modal-add-task_form_container_widget">
+          <option selected disabled></option>
+          <option>todo</option>
+          <option>in-progress</option>
+          <option>done</option>
+        </select>
+      </div>
+      <div class="modal-add-task_form_assignee">
+        <div>Assignee</div>
+        <div class="modal-add-task_form_assignee_form-control">
+          <label class="modal-add-task_form_container_lable">FirstName</label>
+          <input class="modal-add-task_form_container_widget" required />
+        </div>
+        <div class="modal-add-task_form_assignee_form-control">
+          <label class="modal-add-task_form_container_lable">LastName</label>
+          <input class="modal-add-task_form_container_widget" required />
+        </div>
+      </div>
+      <button type="submit">Add Task</button>
+    </form>
+  </div>
 </Layout>
 
-<script></script>
+<script>
+  document
+    .getElementById("modal-add-task_header_close-modal")
+    ?.addEventListener("click", () => {
+      document.querySelector(".modal-add-task")?.remove();
+    });
+</script>
 
 <style>
   .bords {
     display: flex;
     gap: 1rem;
+  }
+  .modal-add-task {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .modal-add-task_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-add-task_form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .modal-add-task_form_container {
+    display: flex;
+    gap: 8px;
+  }
+  .modal-add-task_form_container_lable {
+    width: 200px;
+  }
+  .modal-add-task_form_container_description {
+    height: 300px;
+    width: 100%;
+  }
+  .modal-add-task_form_assignee {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .modal-add-task_form_assignee_form-control {
+    display: flex;
+    gap: 8px;
+  }
+  .modal-add-task_form_container_widget {
+    width: 100%;
+  }
+  .modal-add-task_form_container_widget {
+    width: 100%;
   }
 </style>

@@ -53,7 +53,3 @@ class TaskManager {
 
 const taskManager = new TaskManager();
 export const taskManagerWithAtom = atom(taskManager.tasks);
-export const taskManagerWithAtom2 = atom(taskManager.name);
-
-const message = "Hello, World!";
-export const messageWithAtom = atom(message);

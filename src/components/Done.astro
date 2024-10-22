@@ -8,7 +8,8 @@ import { Icon } from "astro-icon/components";
     <h2 class="bord_header_title">To do</h2>
     <div class="bord_header_action">
       <!-- https://www.astroicon.dev/getting-started/ -->
-      <button class="bord_header_action_add">
+      <button id="bord_header_action_add" class="bord_header_action_add">
+        <!-- https://www.astrouxds.com/icon-library/ -->
         <Icon name="addIcon" />
       </button>
       <button class="bord_header_action_edit">
@@ -18,7 +19,6 @@ import { Icon } from "astro-icon/components";
   </div>
   <ul id="ul" class="bord_cards">
     <li class="bord_cards_one">
-      <!-- display: flex -->
       <div class="bord_cards_one_header">
         <div class="bord_cards_one_header_category-color">●</div>
         <div class="bord_cards_one_header_category-name">DESIGN_SYSTEM</div>
@@ -49,6 +49,12 @@ import { Icon } from "astro-icon/components";
 </div>
 
 <script>
+  const addTaskBtn = document.getElementById("bord_header_action_add");
+  console.log(addTaskBtn);
+  addTaskBtn?.addEventListener("click", () => {
+    console.log("clicked");
+  });
+
   import { taskManagerWithAtom } from "../taskClass";
   const ul = document.getElementById("ul");
   document.getElementById("add-task-btn")?.addEventListener("click", () => {
@@ -56,10 +62,10 @@ import { Icon } from "astro-icon/components";
       ...taskManagerWithAtom.value,
       {
         id: "id",
-        status: "todo",
-        category: "work",
         title: "New Task",
+        category: "work",
         description: "New Task Description",
+        status: "todo",
         assignees: [{ id: "id", firstName: "firstName", lastName: "lastName" }],
       },
     ]);
@@ -93,6 +99,9 @@ import { Icon } from "astro-icon/components";
     cursor: pointer;
   }
 
+  .bord_cards {
+    padding: 0;
+  }
   .bord_cards_one {
     list-style: none;
     width: 200px;
