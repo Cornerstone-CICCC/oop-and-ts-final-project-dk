@@ -1,3 +1,26 @@
-<div>Todo</div>
+<div>
+  <h2>Todo</h2>
+  <ul id="ul"></ul>
+  <button id="add-task-btn">Add Task</button>
+</div>
 
-<script></script>
+<script>
+  import { taskManagerWithAtom } from "../taskClass";
+  console.log(taskManagerWithAtom.value);
+  const ul = document.getElementById("ul");
+  document.getElementById("add-task-btn")?.addEventListener("click", () => {
+    taskManagerWithAtom.set([
+      ...taskManagerWithAtom.value,
+      {
+        id: "id",
+        status: "todo",
+        category: "work",
+        title: "New Task",
+        description: "New Task Description",
+        assignees: [{ id: "id", firstName: "firstName", lastName: "lastName" }],
+      },
+    ]);
+    if (ul === null) return;
+    ul.appendChild(document.createElement("li")).textContent = "New Task";
+  });
+</script>

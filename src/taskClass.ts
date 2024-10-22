@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { atom } from "nanostores";
 
 type Assignee = { id: string; firstName: string; lastName: string };
 
@@ -19,7 +20,7 @@ type NewTask = {
   assignees: Omit<Assignee, "id">[];
 };
 
-export class TaskManager {
+class TaskManager {
   tasks: Task[] = [];
 
   add(newTask: NewTask): void {
@@ -47,4 +48,12 @@ export class TaskManager {
   onDrop() {
     // TODO
   }
+  name = "TaskManager";
 }
+
+const taskManager = new TaskManager();
+export const taskManagerWithAtom = atom(taskManager.tasks);
+export const taskManagerWithAtom2 = atom(taskManager.name);
+
+const message = "Hello, World!";
+export const messageWithAtom = atom(message);

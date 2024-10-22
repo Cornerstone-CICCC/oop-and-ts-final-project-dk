@@ -1,37 +1,76 @@
-<!-- Wrap the component elements in our custom element “astro-heart”. -->
-<astro-heart>
-  <button aria-label="Heart">add</button>:<span>0</span>
-  <ul id="ul">
-    <li>test</li>
+---
+import { taskManagerWithAtom } from "../taskClass";
+import AddIcon from "./AddIcon.astro";
+---
+
+<div class="bord">
+  <div class="bord_header">
+    <h2 class="bord_header_title">To do</h2>
+    <div class="bord_header_action">
+      <button class="bord_header_action_add"> </button>
+      <AddIcon />
+      <button class="bord_header_action_edit">・・・</button>
+    </div>
+  </div>
+  <ul id="ul" class="bord_cards">
+    <div class="bord_cards_one">
+      <!-- display: flex -->
+      <div class="bord_cards_one_header">
+        <div class="bord_cards_one_header_category-color"></div>
+        <div class="bord_cards_one_header_category-name"></div>
+      </div>
+      <h3 class="bord_cards_one_title">Hello section</h3>
+      <p class="bord_cards_one_description">Task description</p>
+      <div class="bord_cards_one_assignees"></div>
+    </div>
   </ul>
-</astro-heart>
+  <ul>
+    {
+      taskManagerWithAtom.subscribe((item) => {
+        return item.map((task) => {
+          return <li>{task.title}</li>;
+        });
+      })
+    }
+  </ul>
+  <button id="add-task-btn">Add Task</button>
+</div>
 
 <script>
-  import { TaskManager } from "../taskClass";
-  const taskManager = new TaskManager();
-  // Define the behaviour for our new type of HTML element.
-  class AstroHeart extends HTMLElement {
-    connectedCallback() {
-      const heartButton = this.querySelector("button");
-      const ul = this.querySelector("ul");
-
-      heartButton?.addEventListener("click", () => {
-        taskManager.add({
-          status: "todo",
-          category: "category",
-          title: "title",
-          description: "test",
-          assignees: [{ firstName: "firstName", lastName: "lastName" }],
-        });
-        console.log(taskManager.tasks);
-        if (ul === null) return;
-        const li = document.createElement("li");
-        li.textContent = taskManager.tasks[0].title;
-        ul.appendChild(li);
-      });
-    }
-  }
-
-  // Tell the browser to use our AstroHeart class for <astro-heart> elements.
-  customElements.define("astro-heart", AstroHeart);
+  import { taskManagerWithAtom } from "../taskClass";
+  const ul = document.getElementById("ul");
+  document.getElementById("add-task-btn")?.addEventListener("click", () => {
+    taskManagerWithAtom.set([
+      ...taskManagerWithAtom.value,
+      {
+        id: "id",
+        status: "todo",
+        category: "work",
+        title: "New Task",
+        description: "New Task Description",
+        assignees: [{ id: "id", firstName: "firstName", lastName: "lastName" }],
+      },
+    ]);
+    if (ul === null) return;
+    ul.appendChild(document.createElement("li")).textContent = "New Task";
+  });
 </script>
+
+<style>
+  .bord {
+    background-color: aliceblue;
+    border-radius: 8px;
+  }
+  .bord_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .bord_header_title {
+    margin: 0;
+    font-size: 16px;
+  }
+  .bord_header_action {
+    display: flex;
+  }
+</style>
