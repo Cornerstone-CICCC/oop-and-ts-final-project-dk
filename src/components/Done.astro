@@ -1,28 +1,40 @@
 ---
 import { taskManagerWithAtom } from "../taskClass";
-import AddIcon from "./AddIcon.astro";
+import { Icon } from "astro-icon/components";
 ---
 
 <div class="bord">
   <div class="bord_header">
     <h2 class="bord_header_title">To do</h2>
     <div class="bord_header_action">
-      <button class="bord_header_action_add"> </button>
-      <AddIcon />
-      <button class="bord_header_action_edit">・・・</button>
+      <!-- https://www.astroicon.dev/getting-started/ -->
+      <button class="bord_header_action_add">
+        <Icon name="addIcon" />
+      </button>
+      <button class="bord_header_action_edit">
+        <Icon name="moreHoriz" />
+      </button>
     </div>
   </div>
   <ul id="ul" class="bord_cards">
-    <div class="bord_cards_one">
+    <li class="bord_cards_one">
       <!-- display: flex -->
       <div class="bord_cards_one_header">
-        <div class="bord_cards_one_header_category-color"></div>
-        <div class="bord_cards_one_header_category-name"></div>
+        <div class="bord_cards_one_header_category-color">●</div>
+        <div class="bord_cards_one_header_category-name">DESIGN_SYSTEM</div>
       </div>
       <h3 class="bord_cards_one_title">Hello section</h3>
-      <p class="bord_cards_one_description">Task description</p>
-      <div class="bord_cards_one_assignees"></div>
-    </div>
+      <p class="bord_cards_one_description">
+        Task description description description description description
+        description description description description description description
+        description description description description description description
+        description
+      </p>
+      <div class="bord_cards_one_assignees">
+        <div class="bord_cards_one_assignees_one">VH</div>
+        <div class="bord_cards_one_assignees_one">AG</div>
+      </div>
+    </li>
   </ul>
   <ul>
     {
@@ -60,6 +72,7 @@ import AddIcon from "./AddIcon.astro";
   .bord {
     background-color: aliceblue;
     border-radius: 8px;
+    padding: 20px;
   }
   .bord_header {
     display: flex;
@@ -72,5 +85,44 @@ import AddIcon from "./AddIcon.astro";
   }
   .bord_header_action {
     display: flex;
+  }
+
+  .bord_header_action_add,
+  .bord_header_action_edit {
+    all: unset;
+    cursor: pointer;
+  }
+
+  .bord_cards_one {
+    list-style: none;
+    width: 200px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .bord_cards_one_header {
+    display: flex;
+    gap: 4px;
+  }
+  .bord_cards_one_header_category-color {
+    color: green;
+  }
+
+  .bord_cards_one_assignees {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .bord_cards_one_assignees_one {
+    background-color: lightgray;
+    border-radius: 50%;
+    padding: 4px;
+  }
+
+  /* https://www.astroicon.dev/guides/styling/ */
+  [data-icon] {
+    font-size: 1.5rem;
+    color: var(--brand-color);
   }
 </style>
