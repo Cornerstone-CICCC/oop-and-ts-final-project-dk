@@ -73,7 +73,8 @@ import { Icon } from "astro-icon/components";
   document
     .getElementById("modal-add-task_header_close-modal")
     ?.addEventListener("click", () => {
-      document.querySelector(".modal-add-task")?.remove();
+      (document.querySelector(".modal-add-task") as HTMLElement).style.display =
+        "none";
     });
 </script>
 
@@ -91,6 +92,7 @@ import { Icon } from "astro-icon/components";
     padding: 16px;
     border-radius: 8px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    display: none;
   }
 
   .modal-add-task_header {

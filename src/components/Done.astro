@@ -18,7 +18,7 @@ import { Icon } from "astro-icon/components";
     </div>
   </div>
   <ul id="ul" class="bord_cards">
-    <li class="bord_cards_one">
+    <li class="bord_cards_one" draggable="true">
       <div class="bord_cards_one_header">
         <div class="bord_cards_one_header_category-color">●</div>
         <div class="bord_cards_one_header_category-name">DESIGN_SYSTEM</div>
@@ -52,7 +52,8 @@ import { Icon } from "astro-icon/components";
   const addTaskBtn = document.getElementById("bord_header_action_add");
   console.log(addTaskBtn);
   addTaskBtn?.addEventListener("click", () => {
-    console.log("clicked");
+    (document.querySelector(".modal-add-task") as HTMLElement).style.display =
+      "block";
   });
 
   import { taskManagerWithAtom } from "../taskClass";
@@ -101,6 +102,9 @@ import { Icon } from "astro-icon/components";
 
   .bord_cards {
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
   .bord_cards_one {
     list-style: none;
