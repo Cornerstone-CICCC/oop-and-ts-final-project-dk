@@ -3,9 +3,9 @@ import { taskManagerWithAtom } from "../taskClass";
 import { Icon } from "astro-icon/components";
 ---
 
-<div class="bord">
+<div class="bord" id="bord-done">
   <div class="bord_header">
-    <h2 class="bord_header_title">To do</h2>
+    <h2 class="bord_header_title">Done</h2>
     <div class="bord_header_action">
       <!-- https://www.astroicon.dev/getting-started/ -->
       <button id="bord_header_action_add" class="bord_header_action_add">
@@ -18,7 +18,7 @@ import { Icon } from "astro-icon/components";
     </div>
   </div>
   <ul id="ul" class="bord_cards">
-    <li class="bord_cards_one" draggable="true">
+    <li id="uuid" class="bord_cards_one" draggable="true">
       <div class="bord_cards_one_header">
         <div class="bord_cards_one_header_category-color">●</div>
         <div class="bord_cards_one_header_category-name">DESIGN_SYSTEM</div>
@@ -45,12 +45,10 @@ import { Icon } from "astro-icon/components";
       })
     }
   </ul>
-  <button id="add-task-btn">Add Task</button>
 </div>
 
 <script>
   const addTaskBtn = document.getElementById("bord_header_action_add");
-  console.log(addTaskBtn);
   addTaskBtn?.addEventListener("click", () => {
     (document.querySelector(".modal-add-task") as HTMLElement).style.display =
       "block";
@@ -58,6 +56,28 @@ import { Icon } from "astro-icon/components";
 
   import { taskManagerWithAtom } from "../taskClass";
   const ul = document.getElementById("ul");
+  const bordDone = document.getElementById("bord-done");
+
+  bordDone?.addEventListener("drop", (e) => {
+    e.preventDefault();
+    const dataTransfer = e.dataTransfer;
+    if (dataTransfer === null) return;
+
+    const data = dataTransfer.getData("application/my-app");
+    const target = e.target as HTMLElement;
+    const elByData = document.getElementById(data);
+    if (target === null || elByData === null) return;
+
+    target.appendChild(elByData);
+  });
+
+  bordDone?.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    const dataTransfer = e.dataTransfer;
+    if (dataTransfer === null) return;
+    dataTransfer.dropEffect = "move";
+  });
+
   document.getElementById("add-task-btn")?.addEventListener("click", () => {
     taskManagerWithAtom.set([
       ...taskManagerWithAtom.value,

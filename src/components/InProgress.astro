@@ -1,3 +1,133 @@
-<div>In progress</div>
+---
+import { taskManagerWithAtom } from "../taskClass";
+import { Icon } from "astro-icon/components";
+---
 
-<script></script>
+<div class="bord" id="bord-in-progress">
+  <div class="bord_header">
+    <h2 class="bord_header_title">In progress</h2>
+    <div class="bord_header_action">
+      <!-- https://www.astroicon.dev/getting-started/ -->
+      <button id="bord_header_action_add" class="bord_header_action_add">
+        <!-- https://www.astrouxds.com/icon-library/ -->
+        <Icon name="addIcon" />
+      </button>
+      <button class="bord_header_action_edit">
+        <Icon name="moreHoriz" />
+      </button>
+    </div>
+  </div>
+  <ul id="ul" class="bord_cards">
+    <li id="uuid" class="bord_cards_one" draggable="true">
+      <div class="bord_cards_one_header">
+        <div class="bord_cards_one_header_category-color">●</div>
+        <div class="bord_cards_one_header_category-name">DESIGN_SYSTEM</div>
+      </div>
+      <h3 class="bord_cards_one_title">Hello section</h3>
+      <p class="bord_cards_one_description">
+        Task description description description description description
+        description description description description description description
+        description description description description description description
+        description
+      </p>
+      <div class="bord_cards_one_assignees">
+        <div class="bord_cards_one_assignees_one">VH</div>
+        <div class="bord_cards_one_assignees_one">AG</div>
+      </div>
+    </li>
+  </ul>
+  <ul>
+    {
+      taskManagerWithAtom.subscribe((item) => {
+        return item.map((task) => {
+          return <li>{task.title}</li>;
+        });
+      })
+    }
+  </ul>
+  <button id="add-task-btn">Add Task</button>
+</div>
+
+<script>
+  const addTaskBtn = document.getElementById("bord_header_action_add");
+  addTaskBtn?.addEventListener("click", () => {
+    (document.querySelector(".modal-add-task") as HTMLElement).style.display =
+      "block";
+  });
+
+  const bordCardsOne = document.getElementById("uuid");
+  bordCardsOne?.addEventListener("dragstart", (e) => {
+    const dataTransfer = e.dataTransfer;
+    if (dataTransfer === null) return;
+
+    const target = e.target as HTMLElement;
+    if (target === null) return;
+    dataTransfer.setData("application/my-app", target.id);
+    dataTransfer.effectAllowed = "move";
+  });
+</script>
+
+<style>
+  .bord {
+    background-color: aliceblue;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .bord_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .bord_header_title {
+    margin: 0;
+    font-size: 16px;
+  }
+  .bord_header_action {
+    display: flex;
+  }
+
+  .bord_header_action_add,
+  .bord_header_action_edit {
+    all: unset;
+    cursor: pointer;
+  }
+
+  .bord_cards {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .bord_cards_one {
+    list-style: none;
+    width: 200px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .bord_cards_one_header {
+    display: flex;
+    gap: 4px;
+  }
+  .bord_cards_one_header_category-color {
+    color: green;
+  }
+
+  .bord_cards_one_assignees {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .bord_cards_one_assignees_one {
+    background-color: lightgray;
+    border-radius: 50%;
+    padding: 4px;
+  }
+
+  /* https://www.astroicon.dev/guides/styling/ */
+  [data-icon] {
+    font-size: 1.5rem;
+    color: var(--brand-color);
+  }
+</style>
