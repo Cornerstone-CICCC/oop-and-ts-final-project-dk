@@ -1,3 +1,158 @@
-<div>Todo</div>
+<div class="container">
+    <div class="header">
+        <h1>To do</h1>
+        <div class="button-group">
+            <button type="submit" class="add-task-button">+</button>
+            <button type="submit" class="properties-button">...</button>
+        </div>
+    </div>
+    <form class="add-task">
+        <input type="text" name="task-title" placeholder="Task title" required />
+        <select name="task-class">
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+        </select>
+        <textarea name="task-description" placeholder="Task description"></textarea>
+    </form>
+    <div class="task-list">
+        <div class="task high">
+            <div class="task-header">
+                <h3>Task Title</h3>
+            </div>
+            <p>Description.</p>
+            <div class="profile-pics">
+                <img class="profile-pic" src="images/header/profile.jpg" />
+                <img class="profile-pic" src="images/todo/profile2.jpg" />
+            </div>
+        </div>
+        <div class="task medium">
+            <div class="task-header">
+                <h3>Another Task Title</h3>
+            </div>
+            <p>Another description.</p>
+            <div class="profile-pics">
+                <img class="profile-pic" src="images/header/profile.jpg" />
+                <img class="profile-pic" src="images/todo/profile3.png" />
+            </div>
+        </div>
+        <div class="task low">
+            <div class="task-header">
+                <h3>Last Task Title</h3>
+            </div>
+            <p>Last description.</p>
+            <div class="profile-pics">
+                <img class="profile-pic" src="images/todo/profile3.png" />
+                <img class="profile-pic" src="images/todo/profile2.jpg" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    h1 {
+        margin: 0;
+    }
+
+    .button-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .add-task-button, .properties-button {
+        background: transparent;
+        color: black;
+        font-weight: bold;
+        font-size: 20px;
+        cursor: pointer;
+        border: none; 
+        padding: 5px; 
+    }
+
+    .properties-button {
+        margin-left: 5px; /* Reduce el espacio entre los botones */
+        margin-bottom: 15px;
+    }
+
+    .add-task {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+
+    .add-task input,
+    .add-task select,
+    .add-task textarea {
+        margin: 5px 0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .task-list {
+        margin-top: 20px;
+    }
+
+    .task {
+        background: #e8f0fe;
+        border-radius: 4px;
+        padding: 10px;
+        margin: 10px 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .task.high {
+        border-left: 5px solid red;
+    }
+
+    .task.medium {
+        border-left: 5px solid orange;
+    }
+
+    .task.low {
+        border-left: 5px solid green;
+    }
+
+    .task-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .profile-pics {
+        display: flex;
+        margin-top: 10px;
+    }
+
+    .profile-pic {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 5px;
+    }
+</style>
 
 <script></script>
