@@ -1,4 +1,10 @@
-export const drop = (e: DragEvent, droppableElement: HTMLElement) => {
+import { tasks, type Task } from "../tasks";
+
+export const drop = (
+  e: DragEvent,
+  droppableElement: HTMLElement,
+  updatedTaskStatus: Task["status"],
+) => {
   e.preventDefault();
   const dataTransfer = e.dataTransfer;
   if (dataTransfer === null) return;
@@ -8,6 +14,13 @@ export const drop = (e: DragEvent, droppableElement: HTMLElement) => {
   const elByData = document.getElementById(taskId);
   if (elByData === null) return;
 
-  // TODO: Update the task status to "done"
+  const updatedTasks = tasks.value.map((task) => {
+    if (task.id === taskId) {
+      task.status = updatedTaskStatus;
+    }
+    return task;
+  });
+  tasks.set(updatedTasks);
+
   droppableElement.appendChild(elByData);
 };

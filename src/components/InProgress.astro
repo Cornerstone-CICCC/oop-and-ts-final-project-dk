@@ -39,7 +39,7 @@ import { Icon } from "astro-icon/components";
   addTaskBtn?.addEventListener("click", openModalToAddTask);
 
   droppableElement?.addEventListener("drop", (e) => {
-    drop(e, droppableElement);
+    drop(e, droppableElement, "in-progress");
   });
   droppableElement?.addEventListener("dragover", dragover);
 </script>
