@@ -34,12 +34,8 @@ import { Icon } from "astro-icon/components";
     const tasksInProgress = tasks.value.filter(
       (task) => task.status === "in-progress",
     );
-    const uniqueTasks = Array.from(
-      new Map(tasksInProgress.map((task) => [task.id, task])).values(),
-    );
-    console.log(uniqueTasks);
 
-    uniqueTasks.forEach((task) => {
+    tasksInProgress.forEach((task) => {
       const taskElement = createTaskElement(task);
       droppableElement?.appendChild(taskElement);
     });
