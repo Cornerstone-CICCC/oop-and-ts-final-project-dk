@@ -24,13 +24,13 @@ import { Icon } from "astro-icon/components";
   import { dragover } from "../utils/dragover";
   import { drop } from "../utils/drop";
   import { openModalToAddTask } from "../utils/openModalToAddTask";
-  import { taskManagerWithAtom } from "../taskClass";
+  import { tasks } from "../tasks";
 
   const droppableElement = document.getElementById("bord_cards-in-progress");
-  const tasks = taskManagerWithAtom.value.filter(
+  const tasksInProgress = tasks.value.filter(
     (task) => task.status === "in-progress",
   );
-  tasks.forEach((task) => {
+  tasksInProgress.forEach((task) => {
     const taskElement = createTaskElement(task);
     droppableElement?.appendChild(taskElement);
   });

@@ -1,4 +1,4 @@
-import type { Task } from "../taskClass";
+import type { Task } from "../tasks";
 import { dragStart } from "./dragstart";
 
 export const createTaskElement = (task: Task) => {

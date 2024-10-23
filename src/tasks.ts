@@ -12,7 +12,7 @@ export type Task = {
   assignee: Assignee;
 };
 
-const tasks: Task[] = [
+const defaultTasks: Task[] = [
   {
     id: uuidv4(),
     status: "in-progress",
@@ -30,4 +30,4 @@ const tasks: Task[] = [
     assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
   },
 ];
-export const taskManagerWithAtom = atom(tasks);
+export const tasks = atom(defaultTasks);
