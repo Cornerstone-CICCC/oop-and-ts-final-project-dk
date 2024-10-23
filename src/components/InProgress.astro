@@ -1,3 +1,85 @@
-<div>In progress</div>
+---
+import { Icon } from "astro-icon/components";
+---
 
-<script></script>
+<div class="bord" id="bord-in-progress">
+  <div class="bord_header">
+    <h2 class="bord_header_title">In progress</h2>
+    <div class="bord_header_action">
+      <!-- https://www.astroicon.dev/getting-started/ -->
+      <button id="add-task-button-in-progress" class="bord_header_action_add">
+        <!-- https://www.astrouxds.com/icon-library/ -->
+        <Icon name="addIcon" />
+      </button>
+      <button class="bord_header_action_edit">
+        <Icon name="moreHoriz" />
+      </button>
+    </div>
+  </div>
+  <ul id="bord_cards-in-progress" class="bord_cards"></ul>
+</div>
+
+<script>
+  import { createTaskElement } from "../utils/createTaskElement";
+  import { dragover } from "../utils/dragover";
+  import { drop } from "../utils/drop";
+  import { openModalToAddTask } from "../utils/openModalToAddTask";
+  import { tasks } from "../tasks";
+
+  const droppableElement = document.getElementById("bord_cards-in-progress");
+  const tasksInProgress = tasks.value.filter(
+    (task) => task.status === "in-progress",
+  );
+  tasksInProgress.forEach((task) => {
+    const taskElement = createTaskElement(task);
+    droppableElement?.appendChild(taskElement);
+  });
+
+  const addTaskBtn = document.getElementById("add-task-button-in-progress");
+  addTaskBtn?.addEventListener("click", openModalToAddTask);
+
+  droppableElement?.addEventListener("drop", (e) => {
+    drop(e, droppableElement, "in-progress");
+  });
+  droppableElement?.addEventListener("dragover", dragover);
+</script>
+
+<style>
+  .bord {
+    background-color: aliceblue;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .bord_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .bord_header_title {
+    margin: 0;
+    font-size: 16px;
+  }
+  .bord_header_action {
+    display: flex;
+  }
+
+  .bord_header_action_add,
+  .bord_header_action_edit {
+    all: unset;
+    cursor: pointer;
+  }
+
+  .bord_cards {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 300px;
+  }
+
+  /* https://www.astroicon.dev/guides/styling/ */
+  [data-icon] {
+    font-size: 1.5rem;
+    color: var(--brand-color);
+  }
+</style>

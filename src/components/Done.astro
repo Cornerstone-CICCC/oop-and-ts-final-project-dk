@@ -1,45 +1,83 @@
-<!-- Wrap the component elements in our custom element “astro-heart”. -->
-<astro-heart>
-  <button aria-label="Heart">add</button>:<span>0</span>
-  <ul id="ul">
-    <li>test</li>
-  </ul>
-</astro-heart>
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div class="bord">
+  <div class="bord_header">
+    <h2 class="bord_header_title">Done</h2>
+    <div class="bord_header_action">
+      <!-- https://www.astroicon.dev/getting-started/ -->
+      <button id="add-task-button-done" class="bord_header_action_add">
+        <!-- https://www.astrouxds.com/icon-library/ -->
+        <Icon name="addIcon" />
+      </button>
+      <button class="bord_header_action_edit">
+        <Icon name="moreHoriz" />
+      </button>
+    </div>
+  </div>
+  <ul id="bord_cards-done" class="bord_cards"></ul>
+</div>
 
 <script>
-  import { TaskManager } from "../taskClass";
-  const taskManager = new TaskManager();
-  // Define the behaviour for our new type of HTML element.
-  class AstroHeart extends HTMLElement {
-    connectedCallback() {
-      let count = 0;
+  import { createTaskElement } from "../utils/createTaskElement";
+  import { dragover } from "../utils/dragover";
+  import { drop } from "../utils/drop";
+  import { openModalToAddTask } from "../utils/openModalToAddTask";
+  import { tasks } from "../tasks";
 
-      const heartButton = this.querySelector("button");
-      const countSpan = this.querySelector("span");
-      const ul = this.querySelector("ul");
-      console.log(ul);
+  const droppableElement = document.getElementById("bord_cards-done");
+  const tasksDone = tasks.value.filter((task) => task.status === "done");
+  tasksDone.forEach((task) => {
+    const taskElement = createTaskElement(task);
+    droppableElement?.appendChild(taskElement);
+  });
 
-      // Each time the button is clicked, update the count.
-      heartButton?.addEventListener("click", () => {
-        taskManager.add({
-          status: "todo",
-          category: "category",
-          title: "title",
-          description: "test",
-          assignees: [{ firstName: "firstName", lastName: "lastName" }],
-        });
-        console.log(taskManager.tasks);
-        count++;
-        if (countSpan === null) return;
-        countSpan.textContent = count.toString();
-        if (ul === null) return;
-        const li = document.createElement("li");
-        li.textContent = taskManager.tasks[0].title;
-        ul.appendChild(li);
-      });
-    }
+  const addTaskBtn = document.getElementById("add-task-button-done");
+  addTaskBtn?.addEventListener("click", openModalToAddTask);
+
+  droppableElement?.addEventListener("drop", (e) => {
+    drop(e, droppableElement, "done");
+  });
+  droppableElement?.addEventListener("dragover", dragover);
+</script>
+
+<style>
+  .bord {
+    background-color: aliceblue;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .bord_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .bord_header_title {
+    margin: 0;
+    font-size: 16px;
+  }
+  .bord_header_action {
+    display: flex;
   }
 
-  // Tell the browser to use our AstroHeart class for <astro-heart> elements.
-  customElements.define("astro-heart", AstroHeart);
-</script>
+  .bord_header_action_add,
+  .bord_header_action_edit {
+    all: unset;
+    cursor: pointer;
+  }
+
+  .bord_cards {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 300px;
+  }
+
+  /* https://www.astroicon.dev/guides/styling/ */
+  [data-icon] {
+    font-size: 1.5rem;
+    color: var(--brand-color);
+  }
+</style>
