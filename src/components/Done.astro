@@ -38,6 +38,7 @@ import { Icon } from "astro-icon/components";
 </div>
 
 <script>
+  import { dragover } from "../utils/dragover";
   const addTaskBtn = document.getElementById("bord_header_action_add");
 
   addTaskBtn?.addEventListener("click", () => {
@@ -61,12 +62,7 @@ import { Icon } from "astro-icon/components";
     bordDone.appendChild(elByData);
   });
 
-  bordDone?.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    const dataTransfer = e.dataTransfer;
-    if (dataTransfer === null) return;
-    dataTransfer.dropEffect = "move";
-  });
+  bordDone?.addEventListener("dragover", dragover);
 </script>
 
 <style>
