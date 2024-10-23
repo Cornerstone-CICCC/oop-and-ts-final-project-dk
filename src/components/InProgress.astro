@@ -7,7 +7,7 @@ import { Icon } from "astro-icon/components";
     <h2 class="bord_header_title">In progress</h2>
     <div class="bord_header_action">
       <!-- https://www.astroicon.dev/getting-started/ -->
-      <button id="bord_header_action_add" class="bord_header_action_add">
+      <button id="add-task-button-in-progress" class="bord_header_action_add">
         <!-- https://www.astrouxds.com/icon-library/ -->
         <Icon name="addIcon" />
       </button>
@@ -39,7 +39,7 @@ import { Icon } from "astro-icon/components";
 
 <script>
   import { dragStart } from "../utils/dragstart";
-  const addTaskBtn = document.getElementById("bord_header_action_add");
+  const addTaskBtn = document.getElementById("add-task-button-in-progress");
   addTaskBtn?.addEventListener("click", () => {
     (document.querySelector(".modal-add-task") as HTMLElement).style.display =
       "block";
