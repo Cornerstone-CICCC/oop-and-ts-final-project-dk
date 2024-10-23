@@ -39,11 +39,9 @@ import { Icon } from "astro-icon/components";
 
 <script>
   import { dragStart } from "../utils/dragstart";
+  import { openModalToAddTask } from "../utils/openModalToAddTask";
   const addTaskBtn = document.getElementById("add-task-button-in-progress");
-  addTaskBtn?.addEventListener("click", () => {
-    (document.querySelector(".modal-add-task") as HTMLElement).style.display =
-      "block";
-  });
+  addTaskBtn?.addEventListener("click", openModalToAddTask);
 
   const bordCardsOne = document.getElementById("uuid");
   bordCardsOne?.addEventListener("dragstart", dragStart);

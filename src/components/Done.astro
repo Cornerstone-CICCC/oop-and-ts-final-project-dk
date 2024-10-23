@@ -39,14 +39,11 @@ import { Icon } from "astro-icon/components";
 
 <script>
   import { dragover } from "../utils/dragover";
+  import { openModalToAddTask } from "../utils/openModalToAddTask";
   import { drop } from "../utils/drop";
 
   const addTaskBtn = document.getElementById("add-task-button-done");
-
-  addTaskBtn?.addEventListener("click", () => {
-    (document.querySelector(".modal-add-task") as HTMLElement).style.display =
-      "block";
-  });
+  addTaskBtn?.addEventListener("click", openModalToAddTask);
 
   const bordDone = document.getElementById("bord_cards-done");
 
