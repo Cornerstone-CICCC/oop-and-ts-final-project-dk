@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 type Assignee = { id: string; firstName: string; lastName: string };
 
-type Task = {
+export type Task = {
   id: string;
   status: "todo" | "in-progress" | "done";
   category: string; // e.g. "DESIGN SYSTEM", "DEVELOPMENT", "TYPOGRAPHY"

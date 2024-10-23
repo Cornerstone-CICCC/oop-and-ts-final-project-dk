@@ -20,7 +20,7 @@ import { Icon } from "astro-icon/components";
 </div>
 
 <script>
-  import { dragStart } from "../utils/dragstart";
+  import { createTaskElement } from "../utils/createTaskElement";
   import { dragover } from "../utils/dragover";
   import { drop } from "../utils/drop";
   import { openModalToAddTask } from "../utils/openModalToAddTask";
@@ -31,55 +31,8 @@ import { Icon } from "astro-icon/components";
     (task) => task.status === "done",
   );
   tasks.forEach((task) => {
-    const bordCardsOne = document.createElement("li");
-    bordCardsOne.id = task.id;
-    bordCardsOne.draggable = true;
-
-    bordCardsOne.style.listStyle = "none";
-    bordCardsOne.style.width = "200px";
-    bordCardsOne.style.backgroundColor = "white";
-    bordCardsOne.style.borderRadius = "8px";
-    bordCardsOne.style.padding = "20px";
-
-    const bordCardsOneHeader = document.createElement("div");
-    bordCardsOneHeader.style.display = "flex";
-    bordCardsOneHeader.style.gap = "4px";
-
-    const bordCardsOneHeaderCategoryColor = document.createElement("div");
-    bordCardsOneHeaderCategoryColor.textContent = "●";
-    bordCardsOneHeaderCategoryColor.style.color = "green";
-    bordCardsOneHeader.appendChild(bordCardsOneHeaderCategoryColor);
-
-    const bordCardsOneHeaderCategoryName = document.createElement("div");
-    bordCardsOneHeaderCategoryName.textContent = task.category;
-    bordCardsOneHeader.appendChild(bordCardsOneHeaderCategoryName);
-
-    bordCardsOne.appendChild(bordCardsOneHeader);
-
-    const bordCardsOneTitle = document.createElement("h3");
-    bordCardsOneTitle.textContent = task.title;
-    bordCardsOne.appendChild(bordCardsOneTitle);
-
-    const bordCardsOneDescription = document.createElement("p");
-    bordCardsOneDescription.textContent = task.description;
-    bordCardsOne.appendChild(bordCardsOneDescription);
-
-    const bordCardsOneAssignees = document.createElement("div");
-    bordCardsOneAssignees.style.display = "flex";
-    bordCardsOneAssignees.style.flexWrap = "wrap";
-
-    const bordCardsOneAssigneesOne = document.createElement("div");
-    const { assignee } = task;
-    bordCardsOneAssigneesOne.textContent =
-      assignee.firstName[0] + assignee.lastName[0];
-    bordCardsOneAssigneesOne.style.backgroundColor = "lightgray";
-    bordCardsOneAssigneesOne.style.borderRadius = "50%";
-    bordCardsOneAssigneesOne.style.padding = "4px";
-    bordCardsOneAssignees.appendChild(bordCardsOneAssigneesOne);
-    bordCardsOne.appendChild(bordCardsOneAssignees);
-
-    bordCardsOne.addEventListener("dragstart", dragStart);
-    droppableElement?.appendChild(bordCardsOne);
+    const taskElement = createTaskElement(task);
+    droppableElement?.appendChild(taskElement);
   });
 
   const addTaskBtn = document.getElementById("add-task-button-done");
