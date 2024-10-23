@@ -39,8 +39,8 @@ import { Icon } from "astro-icon/components";
 
 <script>
   import { dragover } from "../utils/dragover";
-  import { openModalToAddTask } from "../utils/openModalToAddTask";
   import { drop } from "../utils/drop";
+  import { openModalToAddTask } from "../utils/openModalToAddTask";
 
   const addTaskBtn = document.getElementById("add-task-button-done");
   addTaskBtn?.addEventListener("click", openModalToAddTask);
