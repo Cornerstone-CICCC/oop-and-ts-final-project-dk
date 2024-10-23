@@ -49,6 +49,7 @@ import { Icon } from "astro-icon/components";
 </div>
 
 <script>
+  import { dragStart } from "../utils/dragstart";
   const addTaskBtn = document.getElementById("bord_header_action_add");
   addTaskBtn?.addEventListener("click", () => {
     (document.querySelector(".modal-add-task") as HTMLElement).style.display =
@@ -56,15 +57,7 @@ import { Icon } from "astro-icon/components";
   });
 
   const bordCardsOne = document.getElementById("uuid");
-  bordCardsOne?.addEventListener("dragstart", (e) => {
-    const dataTransfer = e.dataTransfer;
-    if (dataTransfer === null) return;
-
-    const target = e.target as HTMLElement;
-    if (target === null) return;
-    dataTransfer.setData("application/my-app", target.id);
-    dataTransfer.effectAllowed = "move";
-  });
+  bordCardsOne?.addEventListener("dragstart", dragStart);
 </script>
 
 <style>
