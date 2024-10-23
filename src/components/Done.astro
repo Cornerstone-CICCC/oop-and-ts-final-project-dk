@@ -39,6 +39,8 @@ import { Icon } from "astro-icon/components";
 
 <script>
   import { dragover } from "../utils/dragover";
+  import { drop } from "../utils/drop";
+
   const addTaskBtn = document.getElementById("bord_header_action_add");
 
   addTaskBtn?.addEventListener("click", () => {
@@ -49,17 +51,7 @@ import { Icon } from "astro-icon/components";
   const bordDone = document.getElementById("bord-done");
 
   bordDone?.addEventListener("drop", (e) => {
-    e.preventDefault();
-    const dataTransfer = e.dataTransfer;
-    if (dataTransfer === null) return;
-
-    const taskId = dataTransfer.getData("application/my-app");
-
-    const elByData = document.getElementById(taskId);
-    if (elByData === null) return;
-
-    // TODO: Update the task status to "done"
-    bordDone.appendChild(elByData);
+    drop(e, bordDone);
   });
 
   bordDone?.addEventListener("dragover", dragover);
