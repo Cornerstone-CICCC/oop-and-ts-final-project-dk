@@ -16,7 +16,7 @@ import { Icon } from "astro-icon/components";
       </button>
     </div>
   </div>
-  <ul id="bord-done" class="bord_cards">
+  <ul id="bord_cards-done" class="bord_cards">
     <li id="uuid" class="bord_cards_one" draggable="true">
       <div class="bord_cards_one_header">
         <div class="bord_cards_one_header_category-color">●</div>
@@ -48,7 +48,7 @@ import { Icon } from "astro-icon/components";
       "block";
   });
 
-  const bordDone = document.getElementById("bord-done");
+  const bordDone = document.getElementById("bord_cards-done");
 
   bordDone?.addEventListener("drop", (e) => {
     drop(e, bordDone);
