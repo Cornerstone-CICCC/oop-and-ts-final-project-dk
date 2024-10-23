@@ -16,7 +16,7 @@ import { Icon } from "astro-icon/components";
       </button>
     </div>
   </div>
-  <ul id="bord_cards-progress" class="bord_cards">
+  <ul id="bord_cards-in-progress" class="bord_cards">
     <li id="uuid" class="bord_cards_one" draggable="true">
       <div class="bord_cards_one_header">
         <div class="bord_cards_one_header_category-color">●</div>
@@ -39,12 +39,20 @@ import { Icon } from "astro-icon/components";
 
 <script>
   import { dragStart } from "../utils/dragstart";
+  import { dragover } from "../utils/dragover";
+  import { drop } from "../utils/drop";
   import { openModalToAddTask } from "../utils/openModalToAddTask";
   const addTaskBtn = document.getElementById("add-task-button-in-progress");
   addTaskBtn?.addEventListener("click", openModalToAddTask);
 
   const draggableElement = document.getElementById("uuid");
   draggableElement?.addEventListener("dragstart", dragStart);
+
+  const droppableElement = document.getElementById("bord_cards-in-progress");
+  droppableElement?.addEventListener("drop", (e) => {
+    drop(e, droppableElement);
+  });
+  droppableElement?.addEventListener("dragover", dragover);
 </script>
 
 <style>
