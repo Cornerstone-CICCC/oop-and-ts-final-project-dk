@@ -1,124 +1,170 @@
 <header class="header">
-    <div class="left-section">
-      <img src="/images/header/search.png" alt="Buscar" class="search-icon"/>
-      <input type="text" placeholder="Search" class="search-bar">
+  <div class="left-section">
+    <img src="/images/header/search.png" alt="Buscar" class="search-icon"/>
+    <input type="text" id="search" placeholder="Search" class="search-bar" />
+    <ul id="suggestions-list" class="suggestions-list"></ul>
+</div>
+  <div class="right-section">
+    <button class="icon-button">
+      <img src="/images/header/bell.png" alt="about" class="icon"/>
+    </button>
+    <button class="icon-button">
+      <img src="/images/header/faq.png" alt="About" class="icon"/>
+    </button>
+    <div class="profile-pic">
+      <img src="/images/header/profile.jpg" alt="Usuario" class="profile-img"/>
     </div>
-    <div class="right-section">
-      <button class="icon-button">
-        <img src="/images/header/bell.png" alt="about" class="icon"/>
-      </button>
-      <button class="icon-button">
-        <img src="/images/header/faq.png" alt="About" class="icon"/>
-      </button>
-      <div class="profile-pic">
-        <img src="/images/header/profile.jpg" alt="Usuario" class="profile-img"/>
-      </div>
-    </div>
-  </header>
+  </div>
+</header>
 
-  <style>
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      background-color: #f8f8f8;
-      border-bottom: 1px solid #e0e0e0;
-    }
-  
-    .left-section {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-  
+<style>
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .left-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .search-bar {
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    outline: none;
+    width: 800px;
+  }
+
+  .search-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .right-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .suggestions-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 600px;
+    background-color: white;
+    border: 1px solid #dcdcdc;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+    z-index: 1;
+}
+
+.suggestions-list li {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.suggestions-list li:hover {
+    background-color: #f0f0f0;
+}
+
+.search-bar:focus + .suggestions-list {
+    display: block;
+}
+
+  .icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .profile-pic {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 768px) {
     .search-bar {
-      padding: 8px 12px;
-      border-radius: 20px;
-      border: 1px solid #ccc;
-      outline: none;
-      width: 800px;
+      width: 100%;
+      padding: 6px 10px; 
     }
-  
+
     .search-icon {
-      width: 20px;
-      height: 20px;
-    }
-  
-    .right-section {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-  
-    .icon-button {
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-  
-    .icon {
       width: 24px;
       height: 24px;
     }
-  
+
+    .icon {
+      width: 30px;
+      height: 30px;
+    }
+
     .profile-pic {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      overflow: hidden;
+      width: 45px; 
+      height: 45px;
     }
-  
-    .profile-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+  }
 
-    @media (max-width: 768px) {
-      .search-bar {
-        width: 100%;
-        padding: 6px 10px; 
-      }
-
-      .search-icon {
-        width: 24px;
-        height: 24px;
-      }
-
-      .icon {
-        width: 30px;
-        height: 30px;
-      }
-
-      .profile-pic {
-        width: 45px; 
-        height: 45px;
-      }
+  @media (max-width: 480px) {
+    .search-bar {
+      width: 100%; 
+      padding: 4px 8px;
+      font-size: 14px; 
     }
 
-    @media (max-width: 480px) {
-      .search-bar {
-        width: 100%; 
-        padding: 4px 8px;
-        font-size: 14px; 
-      }
-
-      .search-icon {
-        width: 20px; 
-        height: 20px;
-      }
-
-      .icon {
-        width: 28px;
-        height: 28px;
-      }
-
-      .profile-pic {
-        width: 40px;
-        height: 40px;
-      }
+    .search-icon {
+      width: 20px; 
+      height: 20px;
     }
-  </style>
 
-  <script></script>
+    .icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .profile-pic {
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>
+
+<script>
+const searchInput = document.getElementById("search") as HTMLInputElement;
+
+let timeout: ReturnType<typeof setTimeout>;
+
+searchInput?.addEventListener("input", function () {
+  clearTimeout(timeout); // Limpia el timeout anterior
+  timeout = setTimeout(() => {
+    const event = new CustomEvent('filter-tasks', {
+      detail: { searchTerm: searchInput.value.toLowerCase() }
+    });
+    window.dispatchEvent(event);
+  }, 300);
+});
+</script>

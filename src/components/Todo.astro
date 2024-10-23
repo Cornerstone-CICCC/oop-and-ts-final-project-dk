@@ -2,20 +2,12 @@
     <div class="header">
         <h1>To do</h1>
         <div class="button-group">
-            <button type="submit" class="add-task-button">+</button>
-            <button type="submit" class="properties-button">...</button>
+            <button type="button" class="add-task-button" id="add-task-btn">+</button>
+            <button type="button" class="properties-button">...</button>
         </div>
     </div>
-    <form class="add-task">
-        <input type="text" name="task-title" placeholder="Task title" required />
-        <select name="task-class">
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
-        </select>
-        <textarea name="task-description" placeholder="Task description"></textarea>
-    </form>
-    <div class="task-list">
+    
+    <div class="task-list" id="task-list">
         <div class="task high">
             <div class="task-header">
                 <h3>Task Title</h3>
@@ -92,14 +84,13 @@
     }
 
     .properties-button {
-        margin-left: 5px; /* Reduce el espacio entre los botones */
+        margin-left: 5px; 
         margin-bottom: 15px;
     }
 
     .add-task {
         display: flex;
         flex-direction: column;
-        margin-bottom: 20px;
     }
 
     .add-task input,
@@ -153,6 +144,25 @@
         border-radius: 50%;
         margin-right: 5px;
     }
+
 </style>
 
-<script></script>
+<script>
+const taskList = document.getElementById("task-list") as HTMLElement;
+
+window.addEventListener("filter-tasks", function(event: CustomEvent): void {
+    const searchTerm = event.detail.searchTerm.toLowerCase();
+    const tasks = taskList.getElementsByClassName("task");
+
+    Array.from(tasks).forEach(task => {
+        const title = (task.querySelector(".task-header h3") as HTMLElement)?.innerText.toLowerCase() || '';
+        const description = (task.querySelector("p") as HTMLElement)?.innerText.toLowerCase() || '';
+
+        if (title.includes(searchTerm) || description.includes(searchTerm)) {
+            task.setAttribute("style", "display: '';"); 
+        } else {
+            task.setAttribute("style", "display: none;");
+        }
+    });
+});
+</script>
