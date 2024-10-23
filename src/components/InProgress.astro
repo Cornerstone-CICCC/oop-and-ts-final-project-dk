@@ -1,5 +1,4 @@
 ---
-import { taskManagerWithAtom } from "../taskClass";
 import { Icon } from "astro-icon/components";
 ---
 
@@ -36,16 +35,6 @@ import { Icon } from "astro-icon/components";
       </div>
     </li>
   </ul>
-  <ul>
-    {
-      taskManagerWithAtom.subscribe((item) => {
-        return item.map((task) => {
-          return <li>{task.title}</li>;
-        });
-      })
-    }
-  </ul>
-  <button id="add-task-btn">Add Task</button>
 </div>
 
 <script>
