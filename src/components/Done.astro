@@ -38,6 +38,7 @@ import { Icon } from "astro-icon/components";
 </div>
 
 <script>
+  import { dragStart } from "../utils/dragstart";
   import { dragover } from "../utils/dragover";
   import { drop } from "../utils/drop";
   import { openModalToAddTask } from "../utils/openModalToAddTask";
@@ -46,11 +47,9 @@ import { Icon } from "astro-icon/components";
   addTaskBtn?.addEventListener("click", openModalToAddTask);
 
   const droppableElement = document.getElementById("bord_cards-done");
-
   droppableElement?.addEventListener("drop", (e) => {
     drop(e, droppableElement);
   });
-
   droppableElement?.addEventListener("dragover", dragover);
 </script>
 
