@@ -53,14 +53,12 @@ import { Icon } from "astro-icon/components";
     if (dataTransfer === null) return;
 
     const taskId = dataTransfer.getData("application/my-app");
-    const target = e.target as HTMLElement;
 
     const elByData = document.getElementById(taskId);
-    if (target === null || elByData === null) return;
+    if (elByData === null) return;
 
     // TODO: Update the task status to "done"
-
-    target.appendChild(elByData);
+    bordDone.appendChild(elByData);
   });
 
   bordDone?.addEventListener("dragover", (e) => {
