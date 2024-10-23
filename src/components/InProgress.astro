@@ -16,25 +16,7 @@ import { Icon } from "astro-icon/components";
       </button>
     </div>
   </div>
-  <ul id="bord_cards-in-progress" class="bord_cards">
-    <li id="uuid" class="bord_cards_one" draggable="true">
-      <div class="bord_cards_one_header">
-        <div class="bord_cards_one_header_category-color">●</div>
-        <div class="bord_cards_one_header_category-name">DESIGN_SYSTEM</div>
-      </div>
-      <h3 class="bord_cards_one_title">InProgress</h3>
-      <p class="bord_cards_one_description">
-        Task description description description description description
-        description description description description description description
-        description description description description description description
-        description
-      </p>
-      <div class="bord_cards_one_assignees">
-        <div class="bord_cards_one_assignees_one">VH</div>
-        <div class="bord_cards_one_assignees_one">AG</div>
-      </div>
-    </li>
-  </ul>
+  <ul id="bord_cards-in-progress" class="bord_cards"></ul>
 </div>
 
 <script>
@@ -42,13 +24,67 @@ import { Icon } from "astro-icon/components";
   import { dragover } from "../utils/dragover";
   import { drop } from "../utils/drop";
   import { openModalToAddTask } from "../utils/openModalToAddTask";
+  import { taskManagerWithAtom } from "../taskClass";
+
+  const droppableElement = document.getElementById("bord_cards-in-progress");
+  const tasks = taskManagerWithAtom.value.filter(
+    (task) => task.status === "in-progress",
+  );
+  tasks.forEach((task) => {
+    const bordCardsOne = document.createElement("li");
+    bordCardsOne.id = task.id;
+    bordCardsOne.draggable = true;
+
+    bordCardsOne.style.listStyle = "none";
+    bordCardsOne.style.width = "200px";
+    bordCardsOne.style.backgroundColor = "white";
+    bordCardsOne.style.borderRadius = "8px";
+    bordCardsOne.style.padding = "20px";
+
+    const bordCardsOneHeader = document.createElement("div");
+    bordCardsOneHeader.style.display = "flex";
+    bordCardsOneHeader.style.gap = "4px";
+
+    const bordCardsOneHeaderCategoryColor = document.createElement("div");
+    bordCardsOneHeaderCategoryColor.textContent = "●";
+    bordCardsOneHeaderCategoryColor.style.color = "green";
+    bordCardsOneHeader.appendChild(bordCardsOneHeaderCategoryColor);
+
+    const bordCardsOneHeaderCategoryName = document.createElement("div");
+    bordCardsOneHeaderCategoryName.textContent = task.category;
+    bordCardsOneHeader.appendChild(bordCardsOneHeaderCategoryName);
+
+    bordCardsOne.appendChild(bordCardsOneHeader);
+
+    const bordCardsOneTitle = document.createElement("h3");
+    bordCardsOneTitle.textContent = task.title;
+    bordCardsOne.appendChild(bordCardsOneTitle);
+
+    const bordCardsOneDescription = document.createElement("p");
+    bordCardsOneDescription.textContent = task.description;
+    bordCardsOne.appendChild(bordCardsOneDescription);
+
+    const bordCardsOneAssignees = document.createElement("div");
+    bordCardsOneAssignees.style.display = "flex";
+    bordCardsOneAssignees.style.flexWrap = "wrap";
+
+    const bordCardsOneAssigneesOne = document.createElement("div");
+    const { assignee } = task;
+    bordCardsOneAssigneesOne.textContent =
+      assignee.firstName[0] + assignee.lastName[0];
+    bordCardsOneAssigneesOne.style.backgroundColor = "lightgray";
+    bordCardsOneAssigneesOne.style.borderRadius = "50%";
+    bordCardsOneAssigneesOne.style.padding = "4px";
+    bordCardsOneAssignees.appendChild(bordCardsOneAssigneesOne);
+    bordCardsOne.appendChild(bordCardsOneAssignees);
+
+    bordCardsOne.addEventListener("dragstart", dragStart);
+    droppableElement?.appendChild(bordCardsOne);
+  });
+
   const addTaskBtn = document.getElementById("add-task-button-in-progress");
   addTaskBtn?.addEventListener("click", openModalToAddTask);
 
-  const draggableElement = document.getElementById("uuid");
-  draggableElement?.addEventListener("dragstart", dragStart);
-
-  const droppableElement = document.getElementById("bord_cards-in-progress");
   droppableElement?.addEventListener("drop", (e) => {
     drop(e, droppableElement);
   });
@@ -86,32 +122,6 @@ import { Icon } from "astro-icon/components";
     flex-direction: column;
     gap: 16px;
     min-height: 300px;
-  }
-  .bord_cards_one {
-    list-style: none;
-    width: 200px;
-    background-color: white;
-    border-radius: 8px;
-    padding: 20px;
-  }
-
-  .bord_cards_one_header {
-    display: flex;
-    gap: 4px;
-  }
-  .bord_cards_one_header_category-color {
-    color: green;
-  }
-
-  .bord_cards_one_assignees {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .bord_cards_one_assignees_one {
-    background-color: lightgray;
-    border-radius: 50%;
-    padding: 4px;
   }
 
   /* https://www.astroicon.dev/guides/styling/ */
