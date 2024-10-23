@@ -12,7 +12,7 @@ import { Icon } from "astro-icon/components";
   <Header />
   <h1>CICC bord</h1>
   <div class="bords">
-    <!-- <Todo /> -->
+    <Todo />
     <InProgress />
     <Done />
   </div>
@@ -121,7 +121,6 @@ import { Icon } from "astro-icon/components";
       },
     };
     tasks.set([...tasks.value, task]);
-    console.log(task);
 
     modal.style.display = "none";
   });

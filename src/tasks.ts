@@ -15,6 +15,14 @@ export type Task = {
 const defaultTasks: Task[] = [
   {
     id: uuidv4(),
+    status: "todo",
+    category: "DESIGN SYSTEM",
+    title: "To Do",
+    description: "Create a design system for the company",
+    assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
+  },
+  {
+    id: uuidv4(),
     status: "in-progress",
     category: "DESIGN SYSTEM",
     title: "In Progress",

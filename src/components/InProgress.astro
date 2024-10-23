@@ -27,12 +27,18 @@ import { Icon } from "astro-icon/components";
   import { tasks } from "../tasks";
 
   const droppableElement = document.getElementById("bord_cards-in-progress");
-  const tasksInProgress = tasks.value.filter(
-    (task) => task.status === "in-progress",
-  );
-  tasksInProgress.forEach((task) => {
-    const taskElement = createTaskElement(task);
-    droppableElement?.appendChild(taskElement);
+  tasks.subscribe(() => {
+    if (!droppableElement) return;
+    droppableElement.innerHTML = "";
+
+    const tasksInProgress = tasks.value.filter(
+      (task) => task.status === "in-progress",
+    );
+
+    tasksInProgress.forEach((task) => {
+      const taskElement = createTaskElement(task);
+      droppableElement?.appendChild(taskElement);
+    });
   });
 
   const addTaskBtn = document.getElementById("add-task-button-in-progress");
@@ -49,6 +55,7 @@ import { Icon } from "astro-icon/components";
     background-color: aliceblue;
     border-radius: 8px;
     padding: 20px;
+    min-width: 240px;
   }
   .bord_header {
     display: flex;
