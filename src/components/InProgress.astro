@@ -27,12 +27,22 @@ import { Icon } from "astro-icon/components";
   import { tasks } from "../tasks";
 
   const droppableElement = document.getElementById("bord_cards-in-progress");
-  const tasksInProgress = tasks.value.filter(
-    (task) => task.status === "in-progress",
-  );
-  tasksInProgress.forEach((task) => {
-    const taskElement = createTaskElement(task);
-    droppableElement?.appendChild(taskElement);
+  tasks.subscribe(() => {
+    if (!droppableElement) return;
+    droppableElement.innerHTML = "";
+
+    const tasksInProgress = tasks.value.filter(
+      (task) => task.status === "in-progress",
+    );
+    const uniqueTasks = Array.from(
+      new Map(tasksInProgress.map((task) => [task.id, task])).values(),
+    );
+    console.log(uniqueTasks);
+
+    uniqueTasks.forEach((task) => {
+      const taskElement = createTaskElement(task);
+      droppableElement?.appendChild(taskElement);
+    });
   });
 
   const addTaskBtn = document.getElementById("add-task-button-in-progress");
