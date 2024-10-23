@@ -1,5 +1,6 @@
 import type { Task } from "../../tasks";
 import { dragStart } from "./dragstart";
+import { getColorByCategory } from "./getColorByCategory";
 
 export const createTaskElement = (task: Task) => {
   const taskElement = document.createElement("li");
@@ -18,7 +19,8 @@ export const createTaskElement = (task: Task) => {
 
   const taskCategoryIconElement = document.createElement("div");
   taskCategoryIconElement.textContent = "●";
-  taskCategoryIconElement.style.color = "green";
+  const color = getColorByCategory(task.category);
+  taskCategoryIconElement.style.color = color;
   taskHeaderElement.appendChild(taskCategoryIconElement);
 
   const taskCategoryElement = document.createElement("div");
