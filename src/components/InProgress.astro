@@ -36,9 +36,7 @@ import { Icon } from "astro-icon/components";
   });
 
   const addTaskBtn = document.getElementById("add-task-button-in-progress");
-  addTaskBtn?.addEventListener("click", () => {
-    openModalToAddTask("in-progress");
-  });
+  addTaskBtn?.addEventListener("click", openModalToAddTask);
 
   droppableElement?.addEventListener("drop", (e) => {
     drop(e, droppableElement, "in-progress");
