@@ -1,0 +1,188 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div class="modal-add-task-wrapper">
+  <div class="modal-add-task-wrapper_modal">
+    <div class="modal-add-task-wrapper_modal_header">
+      <h2>Add Task</h2>
+      <button id="close-modal-adding-task">
+        <Icon name="close" />
+      </button>
+    </div>
+    <form class="modal-add-task-wrapper_modal_form" id="form-subbmiting-task">
+      <div class="modal-add-task-wrapper_modal_form_container">
+        <label class="modal-add-task-wrapper_modal_form_container_label">
+          Title
+        </label>
+        <input
+          class="modal-add-task-wrapper_modal_form_container_widget"
+          required
+          name="title"
+        />
+      </div>
+      <div class="modal-add-task-wrapper_modal_form_container">
+        <label class="modal-add-task-wrapper_modal_form_container_label">
+          Category
+        </label>
+        <select
+          required
+          class="modal-add-task-wrapper_modal_form_container_widget"
+          name="category"
+        >
+          <option selected disabled></option>
+          <option>DESIGN_SYSTEM</option>
+          <option>FRONTEND</option>
+          <option>BACKEND</option>
+          <option>DEVOPS</option>
+          <option>OTHER</option>
+        </select>
+      </div>
+      <div class="modal-add-task-wrapper_modal_form_container">
+        <label class="modal-add-task-wrapper_modal_form_container_label">
+          Description
+        </label>
+        <textarea
+          class="modal-add-task-wrapper_modal_form_container_description"
+          required
+          name="description"
+        >
+        </textarea>
+      </div>
+      <div class="modal-add-task-wrapper_modal_form_container">
+        <label class="modal-add-task-wrapper_modal_form_container_label">
+          Status
+        </label>
+        <select
+          required
+          class="modal-add-task-wrapper_modal_form_container_widget"
+          name="status"
+        >
+          <option selected disabled></option>
+          <option>todo</option>
+          <option>in-progress</option>
+          <option>done</option>
+        </select>
+      </div>
+      <div class="modal-add-task_form_assignee">
+        <div>Assignee</div>
+        <div class="modal-add-task_form_assignee_form-control">
+          <label class="modal-add-task-wrapper_modal_form_container_label">
+            FirstName
+          </label>
+          <input
+            class="modal-add-task-wrapper_modal_form_container_widget"
+            required
+            name="firstName"
+          />
+        </div>
+        <div class="modal-add-task_form_assignee_form-control">
+          <label class="modal-add-task-wrapper_modal_form_container_label">
+            LastName
+          </label>
+          <input
+            class="modal-add-task-wrapper_modal_form_container_widget"
+            required
+            name="lastName"
+          />
+        </div>
+      </div>
+      <button type="submit">Add Task</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  import { v4 as uuidv4 } from "uuid";
+  import { type Task, tasks } from "../tasks";
+
+  const modalWrapper = document.querySelector(
+    ".modal-add-task-wrapper",
+  ) as HTMLElement;
+  document
+    .getElementById("close-modal-adding-task")
+    ?.addEventListener("click", () => {
+      modalWrapper.style.display = "none";
+    });
+
+  const submitTaskForm = document.getElementById(
+    "form-subbmiting-task",
+  ) as HTMLFormElement;
+  submitTaskForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const formData = new FormData(submitTaskForm);
+    const task = {
+      id: uuidv4(),
+      title: String(formData.get("title")),
+      category: String(formData.get("category")) as Task["category"],
+      description: String(formData.get("description")),
+      status: String(formData.get("status")) as Task["status"],
+      assignee: {
+        id: uuidv4(),
+        firstName: String(formData.get("firstName")),
+        lastName: String(formData.get("lastName")),
+      },
+    };
+    tasks.set([...tasks.value, task]);
+
+    modalWrapper.style.display = "none";
+  });
+</script>
+
+<style>
+  .modal-add-task-wrapper {
+    position: absolute;
+    height: 100dvh;
+    width: 100%;
+    top: 0;
+    display: none;
+    align-content: center;
+  }
+  .modal-add-task-wrapper_modal {
+    background-color: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    width: fit-content;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .modal-add-task-wrapper_modal_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-add-task-wrapper_modal_form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .modal-add-task-wrapper_modal_form_container {
+    display: flex;
+    gap: 8px;
+  }
+  .modal-add-task-wrapper_modal_form_container_label {
+    width: 200px;
+  }
+  .modal-add-task-wrapper_modal_form_container_description {
+    height: 300px;
+    width: 100%;
+  }
+  .modal-add-task_form_assignee {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .modal-add-task_form_assignee_form-control {
+    display: flex;
+    gap: 8px;
+  }
+  .modal-add-task-wrapper_modal_form_container_widget {
+    width: 100%;
+  }
+  .modal-add-task-wrapper_modal_form_container_widget {
+    width: 100%;
+  }
+</style>

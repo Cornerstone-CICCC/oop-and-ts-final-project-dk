@@ -1,4 +1,5 @@
 import type { Task } from "../../tasks";
+import { updatedTaskIdState } from "../updatedTaskIdState";
 import { dragStart } from "./dragstart";
 import { getColorByCategory } from "./getColorByCategory";
 
@@ -32,6 +33,24 @@ export const createTaskElement = (task: Task) => {
   taskCategoryElement.appendChild(taskCategoryTextElement);
 
   taskHeaderElement.appendChild(taskCategoryElement);
+
+  const taskInteractionElement = document.createElement("div");
+  taskCategoryElement.style.display = "flex";
+  taskCategoryElement.style.gap = "4px";
+
+  const taskEditButton = document.createElement("button");
+  taskEditButton.textContent = "✏️";
+  taskEditButton.style.backgroundColor = "transparent";
+  taskEditButton.style.border = "none";
+  taskEditButton.style.cursor = "pointer";
+  taskEditButton.addEventListener("click", () => {
+    updatedTaskIdState.set(task.id);
+    console.log(updatedTaskIdState.value);
+  });
+  taskInteractionElement.appendChild(taskEditButton);
+
+  taskHeaderElement.appendChild(taskInteractionElement);
+
   taskElement.appendChild(taskHeaderElement);
 
   const taskTitleElement = document.createElement("h3");
