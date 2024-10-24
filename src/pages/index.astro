@@ -10,12 +10,14 @@ import { Icon } from "astro-icon/components";
 <!-- Don't Layout component -->
 <Layout title="CICC bord">
   <Header />
-  <h1>CICC bord</h1>
-  <div class="bords">
-    <Todo />
-    <InProgress />
-    <Done />
-  </div>
+  <main class="main">
+    <h1>CICC bord</h1>
+    <div class="main_bords">
+      <Todo />
+      <InProgress />
+      <Done />
+    </div>
+  </main>
   <div class="modal-add-task-wrapper">
     <div class="modal-add-task-wrapper_modal">
       <div class="modal-add-task-wrapper_modal_header">
@@ -145,9 +147,13 @@ import { Icon } from "astro-icon/components";
 </script>
 
 <style>
-  .bords {
+  .main {
+    padding: 0 40px;
+  }
+  .main_bords {
     display: flex;
     gap: 1rem;
+    justify-content: space-between;
   }
   .modal-add-task-wrapper {
     position: absolute;
