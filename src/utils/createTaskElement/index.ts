@@ -17,16 +17,21 @@ export const createTaskElement = (task: Task) => {
   taskHeaderElement.style.display = "flex";
   taskHeaderElement.style.gap = "4px";
 
+  const taskCategoryElement = document.createElement("div");
+  taskCategoryElement.style.display = "flex";
+  taskCategoryElement.style.gap = "4px";
+
   const taskCategoryIconElement = document.createElement("div");
   taskCategoryIconElement.textContent = "●";
   const color = getColorByCategory(task.category);
   taskCategoryIconElement.style.color = color;
-  taskHeaderElement.appendChild(taskCategoryIconElement);
+  taskCategoryElement.appendChild(taskCategoryIconElement);
 
   const taskCategoryTextElement = document.createElement("div");
   taskCategoryTextElement.textContent = task.category;
-  taskHeaderElement.appendChild(taskCategoryTextElement);
+  taskCategoryElement.appendChild(taskCategoryTextElement);
 
+  taskHeaderElement.appendChild(taskCategoryElement);
   taskElement.appendChild(taskHeaderElement);
 
   const taskTitleElement = document.createElement("h3");
