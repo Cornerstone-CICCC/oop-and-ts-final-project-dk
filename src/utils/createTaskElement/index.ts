@@ -23,9 +23,9 @@ export const createTaskElement = (task: Task) => {
   taskCategoryIconElement.style.color = color;
   taskHeaderElement.appendChild(taskCategoryIconElement);
 
-  const taskCategoryElement = document.createElement("div");
-  taskCategoryElement.textContent = task.category;
-  taskHeaderElement.appendChild(taskCategoryElement);
+  const taskCategoryTextElement = document.createElement("div");
+  taskCategoryTextElement.textContent = task.category;
+  taskHeaderElement.appendChild(taskCategoryTextElement);
 
   taskElement.appendChild(taskHeaderElement);
 
