@@ -6,7 +6,7 @@ type Assignee = { id: string; firstName: string; lastName: string };
 export type Task = {
   id: string;
   status: "todo" | "in-progress" | "done";
-  category: string; // e.g. "DESIGN SYSTEM", "DEVELOPMENT", "TYPOGRAPHY"
+  category: "DESIGN_SYSTEM" | "FRONTEND" | "BACKEND" | "DEVOPS" | "OTHER";
   title: string;
   description: string;
   assignee: Assignee;
@@ -16,7 +16,7 @@ const defaultTasks: Task[] = [
   {
     id: uuidv4(),
     status: "todo",
-    category: "DESIGN SYSTEM",
+    category: "DESIGN_SYSTEM",
     title: "To Do",
     description: "Create a design system for the company",
     assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
@@ -24,7 +24,7 @@ const defaultTasks: Task[] = [
   {
     id: uuidv4(),
     status: "in-progress",
-    category: "DESIGN SYSTEM",
+    category: "FRONTEND",
     title: "In Progress",
     description: "Create a design system for the company",
     assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
@@ -32,7 +32,119 @@ const defaultTasks: Task[] = [
   {
     id: uuidv4(),
     status: "done",
-    category: "DESIGN SYSTEM",
+    category: "BACKEND",
+    title: "DONE",
+    description: "Create a design system for the company",
+    assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
+  },
+  {
+    id: uuidv4(),
+    status: "done",
+    category: "DEVOPS",
+    title: "DONE",
+    description: "Create a design system for the company",
+    assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
+  },
+  {
+    id: uuidv4(),
+    status: "done",
+    category: "OTHER",
+    title: "DONE",
+    description: "Create a design system for the company",
+    assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
+  },
+  {
+    id: uuidv4(),
+    status: "done",
+    category: "OTHER",
+    title: "DONE",
+    description: "Create a design system for the company",
+    assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
+  },
+  {
+    id: uuidv4(),
+    status: "done",
+    category: "OTHER",
+    title: "DONE",
+    description: "Create a design system for the company",
+    assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
+  },
+  {
+    id: uuidv4(),
+    status: "done",
+    category: "OTHER",
+    title: "DONE",
+    description: "Create a design system for the company",
+    assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
+  },
+  {
+    id: uuidv4(),
+    status: "done",
+    category: "OTHER",
+    title: "DONE",
+    description: "Create a design system for the company",
+    assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
+  },
+  {
+    id: uuidv4(),
+    status: "done",
+    category: "OTHER",
+    title: "DONE",
+    description: "Create a design system for the company",
+    assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
+  },
+  {
+    id: uuidv4(),
+    status: "done",
+    category: "OTHER",
+    title: "DONE",
+    description: "Create a design system for the company",
+    assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
+  },
+  {
+    id: uuidv4(),
+    status: "done",
+    category: "OTHER",
+    title: "DONE",
+    description: "Create a design system for the company",
+    assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
+  },
+  {
+    id: uuidv4(),
+    status: "done",
+    category: "OTHER",
+    title: "DONE",
+    description: "Create a design system for the company",
+    assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
+  },
+  {
+    id: uuidv4(),
+    status: "done",
+    category: "OTHER",
+    title: "DONE",
+    description: "Create a design system for the company",
+    assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
+  },
+  {
+    id: uuidv4(),
+    status: "done",
+    category: "OTHER",
+    title: "DONE",
+    description: "Create a design system for the company",
+    assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
+  },
+  {
+    id: uuidv4(),
+    status: "done",
+    category: "OTHER",
+    title: "DONE",
+    description: "Create a design system for the company",
+    assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
+  },
+  {
+    id: uuidv4(),
+    status: "done",
+    category: "OTHER",
     title: "DONE",
     description: "Create a design system for the company",
     assignee: { id: uuidv4(), firstName: "John", lastName: "Doe" },
