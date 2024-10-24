@@ -1,20 +1,21 @@
 <header class="header">
-    <div class="left-section">
-      <img src="/images/header/search.png" alt="Buscar" class="search-icon"/>
-      <input type="text" placeholder="Search" class="search-bar">
+  <div class="left-section">
+    <img src="/images/header/search.png" alt="Buscar" class="search-icon"/>
+    <input type="text" placeholder="Search" class="search-bar" oninput="handleSearch(event)">
+    <ul class="autocomplete-list"></ul>
+  </div>
+  <div class="right-section">
+    <button class="icon-button">
+      <img src="/images/header/bell.png" alt="about" class="icon"/>
+    </button>
+    <button class="icon-button">
+      <img src="/images/header/faq.png" alt="About" class="icon"/>
+    </button>
+    <div class="profile-pic">
+      <img src="/images/header/profile.jpg" alt="Usuario" class="profile-img"/>
     </div>
-    <div class="right-section">
-      <button class="icon-button">
-        <img src="/images/header/bell.png" alt="about" class="icon"/>
-      </button>
-      <button class="icon-button">
-        <img src="/images/header/faq.png" alt="About" class="icon"/>
-      </button>
-      <div class="profile-pic">
-        <img src="/images/header/profile.jpg" alt="Usuario" class="profile-img"/>
-      </div>
-    </div>
-  </header>
+  </div>
+</header>
 
   <style>
     .header {
@@ -75,6 +76,31 @@
       object-fit: cover;
     }
 
+    .autocomplete-list {
+  position: absolute;
+  top: 7.5%; 
+  left:50px;
+  background-color: white;
+  max-height: 200px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin: 5px 0 0;
+  width: calc(100% - 700px);
+  z-index: 1000; 
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.autocomplete-list li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.autocomplete-list li:hover {
+  background-color: #e0f7fa; 
+}
+
     @media (max-width: 768px) {
       .search-bar {
         width: 100%;
@@ -119,6 +145,7 @@
         height: 40px;
       }
     }
+
   </style>
 
-  <script></script>
+<script type="module" src="/src/utils/filteredTask.ts"></script>
