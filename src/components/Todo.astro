@@ -1,159 +1,92 @@
-<div class="container">
-  <div class="header">
-    <h1>To do</h1>
-    <div class="button-group">
-      <button type="submit" class="add-task-button">+</button>
-      <button type="submit" class="properties-button">...</button>
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div class="bord" id="bord-todo">
+  <div class="bord_header">
+    <h2 class="bord_header_title">To do</h2>
+    <div class="bord_header_action">
+      <!-- https://www.astroicon.dev/getting-started/ -->
+      <button id="add-task-button-todo" class="bord_header_action_add">
+        <!-- https://www.astrouxds.com/icon-library/ -->
+        <Icon name="addIcon" />
+      </button>
+      <button class="bord_header_action_edit">
+        <Icon name="moreHoriz" />
+      </button>
     </div>
   </div>
-  <form class="add-task">
-    <input type="text" name="task-title" placeholder="Task title" required />
-    <select name="task-class">
-      <option value="high">High</option>
-      <option value="medium">Medium</option>
-      <option value="low">Low</option>
-    </select>
-    <textarea name="task-description" placeholder="Task description"></textarea>
-  </form>
-  <div class="task-list">
-    <div class="task high">
-      <div class="task-header">
-        <h3>Task Title</h3>
-      </div>
-      <p>Description.</p>
-      <div class="profile-pics">
-        <img class="profile-pic" src="images/header/profile.jpg" />
-        <img class="profile-pic" src="images/todo/profile2.jpg" />
-      </div>
-    </div>
-    <div class="task medium">
-      <div class="task-header">
-        <h3>Another Task Title</h3>
-      </div>
-      <p>Another description.</p>
-      <div class="profile-pics">
-        <img class="profile-pic" src="images/header/profile.jpg" />
-        <img class="profile-pic" src="images/todo/profile3.png" />
-      </div>
-    </div>
-    <div class="task low">
-      <div class="task-header">
-        <h3>Last Task Title</h3>
-      </div>
-      <p>Last description.</p>
-      <div class="profile-pics">
-        <img class="profile-pic" src="images/todo/profile3.png" />
-        <img class="profile-pic" src="images/todo/profile2.jpg" />
-      </div>
-    </div>
-  </div>
+  <ul id="bord_cards-todo" class="bord_cards"></ul>
 </div>
 
+<script>
+  import { createTaskElement } from "../utils/createTaskElement";
+  import { dragover } from "../utils/dragover";
+  import { drop } from "../utils/drop";
+  import { openModalToAddTask } from "../utils/openModalToAddTask";
+  import { tasks } from "../tasks";
+
+  const droppableElement = document.getElementById("bord_cards-todo");
+  tasks.subscribe(() => {
+    if (!droppableElement) return;
+    droppableElement.innerHTML = "";
+
+    const tasksInProgress = tasks.value.filter(
+      (task) => task.status === "todo",
+    );
+
+    tasksInProgress.forEach((task) => {
+      const taskElement = createTaskElement(task);
+      droppableElement?.appendChild(taskElement);
+    });
+  });
+
+  const addTaskBtn = document.getElementById("add-task-button-todo");
+  addTaskBtn?.addEventListener("click", openModalToAddTask);
+
+  droppableElement?.addEventListener("drop", (e) => {
+    drop(e, droppableElement, "todo");
+  });
+  droppableElement?.addEventListener("dragover", dragover);
+</script>
+
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 20px;
-  }
-
-  .container {
-    max-width: 600px;
-    margin: auto;
-    background: white;
-    padding: 20px;
+  .bord {
+    background-color: aliceblue;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    min-width: 240px;
   }
-
-  .header {
+  .bord_header {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-
-  h1 {
+  .bord_header_title {
     margin: 0;
+    font-size: 16px;
   }
-
-  .button-group {
+  .bord_header_action {
     display: flex;
-    align-items: center;
   }
 
-  .add-task-button,
-  .properties-button {
-    background: transparent;
-    color: black;
-    font-weight: bold;
-    font-size: 20px;
+  .bord_header_action_add,
+  .bord_header_action_edit {
+    all: unset;
     cursor: pointer;
-    border: none;
-    padding: 5px;
   }
 
-  .properties-button {
-    margin-left: 5px; 
-    margin-bottom: 15px;
-  }
-
-  .add-task {
+  .bord_cards {
+    padding: 0;
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    gap: 16px;
+    min-height: 300px;
   }
 
-  .add-task input,
-  .add-task select,
-  .add-task textarea {
-    margin: 5px 0;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  .task-list {
-    margin-top: 20px;
-  }
-
-  .task {
-    background: #e8f0fe;
-    border-radius: 4px;
-    padding: 10px;
-    margin: 10px 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .task.high {
-    border-left: 5px solid red;
-  }
-
-  .task.medium {
-    border-left: 5px solid orange;
-  }
-
-  .task.low {
-    border-left: 5px solid green;
-  }
-
-  .task-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .profile-pics {
-    display: flex;
-    margin-top: 10px;
-  }
-
-  .profile-pic {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 5px;
+  /* https://www.astroicon.dev/guides/styling/ */
+  [data-icon] {
+    font-size: 1.5rem;
+    color: var(--brand-color);
   }
 </style>
-
-<script></script>

@@ -20,7 +20,6 @@ export const drop = (
     }
     return task;
   });
-  tasks.set(updatedTasks);
-
   droppableElement.appendChild(elByData);
+  tasks.set(updatedTasks);
 };

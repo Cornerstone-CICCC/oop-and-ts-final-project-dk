@@ -27,10 +27,15 @@ import { Icon } from "astro-icon/components";
   import { tasks } from "../tasks";
 
   const droppableElement = document.getElementById("bord_cards-done");
-  const tasksDone = tasks.value.filter((task) => task.status === "done");
-  tasksDone.forEach((task) => {
-    const taskElement = createTaskElement(task);
-    droppableElement?.appendChild(taskElement);
+  tasks.subscribe(() => {
+    if (!droppableElement) return;
+    droppableElement.innerHTML = "";
+
+    const tasksDone = tasks.value.filter((task) => task.status === "done");
+    tasksDone.forEach((task) => {
+      const taskElement = createTaskElement(task);
+      droppableElement?.appendChild(taskElement);
+    });
   });
 
   const addTaskBtn = document.getElementById("add-task-button-done");
@@ -47,6 +52,7 @@ import { Icon } from "astro-icon/components";
     background-color: aliceblue;
     border-radius: 8px;
     padding: 20px;
+    min-width: 240px;
   }
   .bord_header {
     display: flex;
