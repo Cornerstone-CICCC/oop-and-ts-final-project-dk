@@ -17,27 +17,31 @@ import { Icon } from "astro-icon/components";
     <Done />
   </div>
   <div class="modal-add-task-wrapper">
-    <div class="modal-add-task">
-      <div class="modal-add-task_header">
+    <div class="modal-add-task-wrapper_modal">
+      <div class="modal-add-task-wrapper_modal_header">
         <h2>Add Task</h2>
-        <button id="modal-add-task_header_close-modal">
+        <button id="close-modal-adding-task">
           <Icon name="close" />
         </button>
       </div>
-      <form class="modal-add-task_form" id="submit-task-form">
-        <div class="modal-add-task_form_container">
-          <label class="modal-add-task_form_container_lable">Title</label>
+      <form class="modal-add-task-wrapper_modal_form" id="form-subbmiting-task">
+        <div class="modal-add-task-wrapper_modal_form_container">
+          <label class="modal-add-task-wrapper_modal_form_container_label">
+            Title
+          </label>
           <input
-            class="modal-add-task_form_container_widget"
+            class="modal-add-task-wrapper_modal_form_container_widget"
             required
             name="title"
           />
         </div>
-        <div class="modal-add-task_form_container">
-          <label class="modal-add-task_form_container_lable">Category</label>
+        <div class="modal-add-task-wrapper_modal_form_container">
+          <label class="modal-add-task-wrapper_modal_form_container_label">
+            Category
+          </label>
           <select
             required
-            class="modal-add-task_form_container_widget"
+            class="modal-add-task-wrapper_modal_form_container_widget"
             name="category"
           >
             <option selected disabled></option>
@@ -48,18 +52,24 @@ import { Icon } from "astro-icon/components";
             <option>OTHER</option>
           </select>
         </div>
-        <div class="modal-add-task_form_container">
-          <label class="modal-add-task_form_container_lable">Description</label>
+        <div class="modal-add-task-wrapper_modal_form_container">
+          <label class="modal-add-task-wrapper_modal_form_container_label">
+            Description
+          </label>
           <textarea
-            class="modal-add-task_form_container_description"
+            class="modal-add-task-wrapper_modal_form_container_description"
             required
-            name="description"></textarea>
+            name="description"
+          >
+          </textarea>
         </div>
-        <div class="modal-add-task_form_container">
-          <label class="modal-add-task_form_container_lable">Status</label>
+        <div class="modal-add-task-wrapper_modal_form_container">
+          <label class="modal-add-task-wrapper_modal_form_container_label">
+            Status
+          </label>
           <select
             required
-            class="modal-add-task_form_container_widget"
+            class="modal-add-task-wrapper_modal_form_container_widget"
             name="status"
           >
             <option selected disabled></option>
@@ -71,17 +81,21 @@ import { Icon } from "astro-icon/components";
         <div class="modal-add-task_form_assignee">
           <div>Assignee</div>
           <div class="modal-add-task_form_assignee_form-control">
-            <label class="modal-add-task_form_container_lable">FirstName</label>
+            <label class="modal-add-task-wrapper_modal_form_container_label">
+              FirstName
+            </label>
             <input
-              class="modal-add-task_form_container_widget"
+              class="modal-add-task-wrapper_modal_form_container_widget"
               required
               name="firstName"
             />
           </div>
           <div class="modal-add-task_form_assignee_form-control">
-            <label class="modal-add-task_form_container_lable">LastName</label>
+            <label class="modal-add-task-wrapper_modal_form_container_label">
+              LastName
+            </label>
             <input
-              class="modal-add-task_form_container_widget"
+              class="modal-add-task-wrapper_modal_form_container_widget"
               required
               name="lastName"
             />
@@ -101,13 +115,13 @@ import { Icon } from "astro-icon/components";
     ".modal-add-task-wrapper",
   ) as HTMLElement;
   document
-    .getElementById("modal-add-task_header_close-modal")
+    .getElementById("close-modal-adding-task")
     ?.addEventListener("click", () => {
       modalWrapper.style.display = "none";
     });
 
   const submitTaskForm = document.getElementById(
-    "submit-task-form",
+    "form-subbmiting-task",
   ) as HTMLFormElement;
   submitTaskForm?.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -131,10 +145,6 @@ import { Icon } from "astro-icon/components";
 </script>
 
 <style>
-  body {
-    margin: 0;
-    padding: 0;
-  }
   .bords {
     display: flex;
     gap: 1rem;
@@ -147,7 +157,7 @@ import { Icon } from "astro-icon/components";
     display: none;
     align-content: center;
   }
-  .modal-add-task {
+  .modal-add-task-wrapper_modal {
     background-color: white;
     padding: 16px;
     border-radius: 8px;
@@ -157,25 +167,25 @@ import { Icon } from "astro-icon/components";
     margin: 0 auto;
   }
 
-  .modal-add-task_header {
+  .modal-add-task-wrapper_modal_header {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .modal-add-task_form {
+  .modal-add-task-wrapper_modal_form {
     display: flex;
     flex-direction: column;
     gap: 24px;
   }
-  .modal-add-task_form_container {
+  .modal-add-task-wrapper_modal_form_container {
     display: flex;
     gap: 8px;
   }
-  .modal-add-task_form_container_lable {
+  .modal-add-task-wrapper_modal_form_container_label {
     width: 200px;
   }
-  .modal-add-task_form_container_description {
+  .modal-add-task-wrapper_modal_form_container_description {
     height: 300px;
     width: 100%;
   }
@@ -188,10 +198,10 @@ import { Icon } from "astro-icon/components";
     display: flex;
     gap: 8px;
   }
-  .modal-add-task_form_container_widget {
+  .modal-add-task-wrapper_modal_form_container_widget {
     width: 100%;
   }
-  .modal-add-task_form_container_widget {
+  .modal-add-task-wrapper_modal_form_container_widget {
     width: 100%;
   }
 </style>
