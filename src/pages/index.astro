@@ -16,78 +16,94 @@ import { Icon } from "astro-icon/components";
     <InProgress />
     <Done />
   </div>
-  <div class="modal-add-task">
-    <div class="modal-add-task_header">
-      <h2>Add Task</h2>
-      <button id="modal-add-task_header_close-modal">
-        <Icon name="close" />
-      </button>
+  <div class="modal-add-task-wrapper">
+    <div class="modal-add-task-wrapper_modal">
+      <div class="modal-add-task-wrapper_modal_header">
+        <h2>Add Task</h2>
+        <button id="close-modal-adding-task">
+          <Icon name="close" />
+        </button>
+      </div>
+      <form class="modal-add-task-wrapper_modal_form" id="form-subbmiting-task">
+        <div class="modal-add-task-wrapper_modal_form_container">
+          <label class="modal-add-task-wrapper_modal_form_container_label">
+            Title
+          </label>
+          <input
+            class="modal-add-task-wrapper_modal_form_container_widget"
+            required
+            name="title"
+          />
+        </div>
+        <div class="modal-add-task-wrapper_modal_form_container">
+          <label class="modal-add-task-wrapper_modal_form_container_label">
+            Category
+          </label>
+          <select
+            required
+            class="modal-add-task-wrapper_modal_form_container_widget"
+            name="category"
+          >
+            <option selected disabled></option>
+            <option>DESIGN_SYSTEM</option>
+            <option>FRONTEND</option>
+            <option>BACKEND</option>
+            <option>DEVOPS</option>
+            <option>OTHER</option>
+          </select>
+        </div>
+        <div class="modal-add-task-wrapper_modal_form_container">
+          <label class="modal-add-task-wrapper_modal_form_container_label">
+            Description
+          </label>
+          <textarea
+            class="modal-add-task-wrapper_modal_form_container_description"
+            required
+            name="description"
+          >
+          </textarea>
+        </div>
+        <div class="modal-add-task-wrapper_modal_form_container">
+          <label class="modal-add-task-wrapper_modal_form_container_label">
+            Status
+          </label>
+          <select
+            required
+            class="modal-add-task-wrapper_modal_form_container_widget"
+            name="status"
+          >
+            <option selected disabled></option>
+            <option>todo</option>
+            <option>in-progress</option>
+            <option>done</option>
+          </select>
+        </div>
+        <div class="modal-add-task_form_assignee">
+          <div>Assignee</div>
+          <div class="modal-add-task_form_assignee_form-control">
+            <label class="modal-add-task-wrapper_modal_form_container_label">
+              FirstName
+            </label>
+            <input
+              class="modal-add-task-wrapper_modal_form_container_widget"
+              required
+              name="firstName"
+            />
+          </div>
+          <div class="modal-add-task_form_assignee_form-control">
+            <label class="modal-add-task-wrapper_modal_form_container_label">
+              LastName
+            </label>
+            <input
+              class="modal-add-task-wrapper_modal_form_container_widget"
+              required
+              name="lastName"
+            />
+          </div>
+        </div>
+        <button type="submit">Add Task</button>
+      </form>
     </div>
-    <form class="modal-add-task_form" id="submit-task-form">
-      <div class="modal-add-task_form_container">
-        <label class="modal-add-task_form_container_lable">Title</label>
-        <input
-          class="modal-add-task_form_container_widget"
-          required
-          name="title"
-        />
-      </div>
-      <div class="modal-add-task_form_container">
-        <label class="modal-add-task_form_container_lable">Category</label>
-        <select
-          required
-          class="modal-add-task_form_container_widget"
-          name="category"
-        >
-          <option selected disabled></option>
-          <option>DESIGN_SYSTEM</option>
-          <option>FRONTEND</option>
-          <option>BACKEND</option>
-          <option>DEVOPS</option>
-          <option>OTHER</option>
-        </select>
-      </div>
-      <div class="modal-add-task_form_container">
-        <label class="modal-add-task_form_container_lable">Description</label>
-        <textarea
-          class="modal-add-task_form_container_description"
-          required
-          name="description"></textarea>
-      </div>
-      <div class="modal-add-task_form_container">
-        <label class="modal-add-task_form_container_lable">Status</label>
-        <select
-          required
-          class="modal-add-task_form_container_widget"
-          name="status"
-        >
-          <option selected disabled></option>
-          <option>todo</option>
-          <option>in-progress</option>
-          <option>done</option>
-        </select>
-      </div>
-      <div class="modal-add-task_form_assignee">
-        <div>Assignee</div>
-        <div class="modal-add-task_form_assignee_form-control">
-          <label class="modal-add-task_form_container_lable">FirstName</label>
-          <input
-            class="modal-add-task_form_container_widget"
-            required
-            name="firstName"
-          />
-        </div>
-        <div class="modal-add-task_form_assignee_form-control">
-          <label class="modal-add-task_form_container_lable">LastName</label>
-          <input
-            class="modal-add-task_form_container_widget"
-            required
-            name="lastName"
-          />
-        </div>
-      </div>
-      <button type="submit">Add Task</button>
-    </form>
   </div>
 </Layout>
 
@@ -95,15 +111,17 @@ import { Icon } from "astro-icon/components";
   import { v4 as uuidv4 } from "uuid";
   import { type Task, tasks } from "../tasks";
 
-  const modal = document.querySelector(".modal-add-task") as HTMLElement;
+  const modalWrapper = document.querySelector(
+    ".modal-add-task-wrapper",
+  ) as HTMLElement;
   document
-    .getElementById("modal-add-task_header_close-modal")
+    .getElementById("close-modal-adding-task")
     ?.addEventListener("click", () => {
-      modal.style.display = "none";
+      modalWrapper.style.display = "none";
     });
 
   const submitTaskForm = document.getElementById(
-    "submit-task-form",
+    "form-subbmiting-task",
   ) as HTMLFormElement;
   submitTaskForm?.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -122,51 +140,52 @@ import { Icon } from "astro-icon/components";
     };
     tasks.set([...tasks.value, task]);
 
-    modal.style.display = "none";
+    modalWrapper.style.display = "none";
   });
 </script>
 
 <style>
-
-  body {
-    margin: 0;
-    padding: 0;
-  }
   .bords {
     display: flex;
     gap: 1rem;
   }
-  .modal-add-task {
+  .modal-add-task-wrapper {
     position: absolute;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    height: 100dvh;
+    width: 100%;
+    top: 0;
+    display: none;
+    align-content: center;
+  }
+  .modal-add-task-wrapper_modal {
     background-color: white;
     padding: 16px;
     border-radius: 8px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-    display: none;
+    width: fit-content;
+    height: auto;
+    margin: 0 auto;
   }
 
-  .modal-add-task_header {
+  .modal-add-task-wrapper_modal_header {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .modal-add-task_form {
+  .modal-add-task-wrapper_modal_form {
     display: flex;
     flex-direction: column;
     gap: 24px;
   }
-  .modal-add-task_form_container {
+  .modal-add-task-wrapper_modal_form_container {
     display: flex;
     gap: 8px;
   }
-  .modal-add-task_form_container_lable {
+  .modal-add-task-wrapper_modal_form_container_label {
     width: 200px;
   }
-  .modal-add-task_form_container_description {
+  .modal-add-task-wrapper_modal_form_container_description {
     height: 300px;
     width: 100%;
   }
@@ -179,10 +198,10 @@ import { Icon } from "astro-icon/components";
     display: flex;
     gap: 8px;
   }
-  .modal-add-task_form_container_widget {
+  .modal-add-task-wrapper_modal_form_container_widget {
     width: 100%;
   }
-  .modal-add-task_form_container_widget {
+  .modal-add-task-wrapper_modal_form_container_widget {
     width: 100%;
   }
 </style>
