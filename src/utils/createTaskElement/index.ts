@@ -7,12 +7,12 @@ export const createTaskElement = (task: Task) => {
   const taskElement = document.createElement("li");
   taskElement.id = task.id;
   taskElement.draggable = true;
-
   taskElement.style.listStyle = "none";
   taskElement.style.width = "200px";
   taskElement.style.backgroundColor = "white";
   taskElement.style.borderRadius = "8px";
   taskElement.style.padding = "20px";
+  taskElement.style.fontSize = "16px";
 
   const taskHeaderElement = document.createElement("div");
   taskHeaderElement.style.display = "flex";
@@ -30,6 +30,7 @@ export const createTaskElement = (task: Task) => {
 
   const taskCategoryTextElement = document.createElement("div");
   taskCategoryTextElement.textContent = task.category;
+  taskCategoryTextElement.className = "category";
   taskCategoryElement.appendChild(taskCategoryTextElement);
 
   taskHeaderElement.appendChild(taskCategoryElement);
@@ -43,6 +44,7 @@ export const createTaskElement = (task: Task) => {
   taskEditButton.style.backgroundColor = "transparent";
   taskEditButton.style.border = "none";
   taskEditButton.style.cursor = "pointer";
+  taskEditButton.style.padding = "0";
   taskEditButton.addEventListener("click", () => {
     updatedTaskIdState.set(task.id);
     const modal = document.querySelector(
