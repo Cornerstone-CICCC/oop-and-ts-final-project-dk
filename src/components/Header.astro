@@ -5,9 +5,12 @@
     <ul class="autocomplete-list"></ul>
   </div>
   <div class="right-section">
-    <button class="icon-button">
-      <img src="/images/header/bell.png" alt="about" class="icon"/>
+    <button class="icon-button" id="notification-button">
+      <img src="/images/header/bell.png" alt="about" class="icon" id="notification-icon"/>
     </button>
+    <div id="notification-message" style="display: none; position: absolute; background-color: #ffffff; border-radius: 5px; top: 10vh; right: 0vw ; border:#888 1px solid; font-size:20px; max-height: 20vh; overflow-y: auto;" >
+      <div id="task-list"></div>
+    </div>
     <button class="icon-button">
       <img src="/images/header/faq.png" alt="About" class="icon"/>
     </button>
@@ -235,6 +238,14 @@ width: 70vw;
     margin-left: 30vw;
     gap:2rem
   }
+
+  #notification-message{
+    margin-top: 5vh;
+    left: 8rem;
+    width: 22vw;
+    z-index: 1000;
+  }
+
 }
 
 @media (max-width: 480px) {

@@ -98,6 +98,7 @@ import { Icon } from "astro-icon/components";
 <script>
   import { v4 as uuidv4 } from "uuid";
   import { type Task, tasks } from "../tasks";
+import mod from "astro/zod";
 
   const modalWrapper = document.querySelector(
     ".modal-add-task-wrapper",
@@ -108,28 +109,81 @@ import { Icon } from "astro-icon/components";
       modalWrapper.style.display = "none";
     });
 
-  const submitTaskForm = document.getElementById(
-    "form-subbmiting-task-added",
-  ) as HTMLFormElement;
-  submitTaskForm?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const formData = new FormData(submitTaskForm);
-    const task = {
-      id: uuidv4(),
-      title: String(formData.get("title")),
-      category: String(formData.get("category")) as Task["category"],
-      description: String(formData.get("description")),
-      status: String(formData.get("status")) as Task["status"],
-      assignee: {
-        id: uuidv4(),
-        firstName: String(formData.get("firstName")),
-        lastName: String(formData.get("lastName")),
-      },
-    };
-    tasks.set([...tasks.value, task]);
+    const submitTaskForm = document.getElementById("form-subbmiting-task-added") as HTMLFormElement;
+const notificationIcon = document.getElementById("notification-icon") as HTMLImageElement;
+const notificationMessage = document.getElementById("notification-message") as HTMLDivElement;
+const taskListContainer = document.getElementById("task-list") as HTMLDivElement; // Contenedor para la lista de tareas
 
-    modalWrapper.style.display = "none";
+// Arreglo para almacenar las tareas
+let taskTitles: string[] = [];
+
+submitTaskForm?.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const formData = new FormData(submitTaskForm);
+  
+  // Cambia la imagen del icono de notificación
+  notificationIcon.src = "/images/header/notification.png"; // Cambia esta ruta a tu nueva imagen
+  modalWrapper.style.display = "none";
+  
+  const taskTitle = String(formData.get("title")); // Obtiene el título de la tarea
+  const task = {
+    id: uuidv4(),
+    title: taskTitle,
+    category: String(formData.get("category")) as Task["category"],
+    description: String(formData.get("description")),
+    status: String(formData.get("status")) as Task["status"],
+    assignee: {
+      id: uuidv4(),
+      firstName: String(formData.get("firstName")),
+      lastName: String(formData.get("lastName")),
+    },
+  };
+
+  tasks.set([...tasks.value, task]);
+
+  // Agrega el título de la tarea al historial de tareas
+  taskTitles.push(taskTitle);
+
+  // Muestra el mensaje de notificación para todas las tareas
+  taskListContainer.innerHTML = ""; // Limpia el contenedor antes de mostrar las nuevas tareas
+  taskTitles.forEach(title => {
+    const taskItem = document.createElement("div");
+    taskItem.textContent = `Added task: ${title}`;
+    taskItem.classList.add("task-item");
+    taskItem.style.width="20vw";
+    taskItem.style.textAlign="center";
+    taskItem.style.padding="5px";
+    taskListContainer.appendChild(taskItem); // Agrega cada tarea al contenedor
+
+    taskItem.addEventListener("mouseover", () => {
+      taskItem.style.backgroundColor = "green";
+      taskItem.style.color = "white";
+      taskItem.style.cursor = "pointer";
+    });
+    taskItem.addEventListener("mouseout", () => {
+      taskItem.style.backgroundColor = ""; 
+      taskItem.style.color = ""; 
+    });
+    taskItem.addEventListener("click", () => {
+      taskListContainer.removeChild(taskItem); // Elimina el item de la lista
+      taskTitles = taskTitles.filter(t => t !== title); // Elimina el título de la tarea del array
+        if (taskTitles.length === 0) {
+        notificationIcon.src = "/images/header/bell.png"; // Cambia de vuelta a la imagen original
+      } else {
+        notificationIcon.src = "/images/header/notification.png";
+      }
+    });
   });
+});
+
+// Muestra el mensaje al hacer clic en la imagen de notificación
+notificationIcon.addEventListener("click", () => {
+  if (notificationMessage.style.display === "none") {
+    notificationMessage.style.display = "block";
+  } else {
+    notificationMessage.style.display = "none";
+  }
+});
 </script>
 
 <style>
@@ -188,4 +242,5 @@ import { Icon } from "astro-icon/components";
   .modal-add-task-wrapper_modal_form_container_widget {
     width: 100%;
   }
+
 </style>
