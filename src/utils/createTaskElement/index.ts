@@ -1,4 +1,5 @@
 import type { Task } from "../../tasks";
+import { updatedTaskIdState } from "../updatedTaskIdState";
 import { dragStart } from "./dragstart";
 import { getColorByCategory } from "./getColorByCategory";
 
@@ -17,15 +18,42 @@ export const createTaskElement = (task: Task) => {
   taskHeaderElement.style.display = "flex";
   taskHeaderElement.style.gap = "4px";
 
+  const taskCategoryElement = document.createElement("div");
+  taskCategoryElement.style.display = "flex";
+  taskCategoryElement.style.gap = "4px";
+
   const taskCategoryIconElement = document.createElement("div");
   taskCategoryIconElement.textContent = "●";
   const color = getColorByCategory(task.category);
   taskCategoryIconElement.style.color = color;
-  taskHeaderElement.appendChild(taskCategoryIconElement);
+  taskCategoryElement.appendChild(taskCategoryIconElement);
 
-  const taskCategoryElement = document.createElement("div");
-  taskCategoryElement.textContent = task.category;
+  const taskCategoryTextElement = document.createElement("div");
+  taskCategoryTextElement.textContent = task.category;
+  taskCategoryElement.appendChild(taskCategoryTextElement);
+
   taskHeaderElement.appendChild(taskCategoryElement);
+
+  const taskInteractionElement = document.createElement("div");
+  taskCategoryElement.style.display = "flex";
+  taskCategoryElement.style.gap = "4px";
+
+  const taskEditButton = document.createElement("button");
+  taskEditButton.textContent = "✏️";
+  taskEditButton.style.backgroundColor = "transparent";
+  taskEditButton.style.border = "none";
+  taskEditButton.style.cursor = "pointer";
+  taskEditButton.addEventListener("click", () => {
+    updatedTaskIdState.set(task.id);
+    console.log(updatedTaskIdState.value);
+    const modal = document.querySelector(
+      ".modal-edit-task-wrapper",
+    ) as HTMLElement;
+    modal.style.display = "block";
+  });
+  taskInteractionElement.appendChild(taskEditButton);
+
+  taskHeaderElement.appendChild(taskInteractionElement);
 
   taskElement.appendChild(taskHeaderElement);
 

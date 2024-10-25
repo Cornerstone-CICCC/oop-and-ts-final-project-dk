@@ -1,0 +1,226 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div class="modal-edit-task-wrapper">
+  <div class="modal-edit-task-wrapper_modal">
+    <div class="modal-edit-task-wrapper_modal_header">
+      <h2>Edit Task</h2>
+      <button id="close-modal-editting-task">
+        <Icon name="close" />
+      </button>
+    </div>
+    <form
+      class="modal-edit-task-wrapper_modal_form"
+      id="form-subbmiting-task-edited"
+    >
+      <div class="modal-edit-task-wrapper_modal_form_container">
+        <label class="modal-edit-task-wrapper_modal_form_container_label">
+          Title
+        </label>
+        <input
+          class="modal-edit-task-wrapper_modal_form_container_widget"
+          required
+          name="title"
+        />
+      </div>
+      <div class="modal-edit-task-wrapper_modal_form_container">
+        <label class="modal-edit-task-wrapper_modal_form_container_label">
+          Category
+        </label>
+        <select
+          required
+          class="modal-edit-task-wrapper_modal_form_container_widget"
+          name="category"
+        >
+          <option selected disabled></option>
+          <option>DESIGN_SYSTEM</option>
+          <option>FRONTEND</option>
+          <option>BACKEND</option>
+          <option>DEVOPS</option>
+          <option>OTHER</option>
+        </select>
+      </div>
+      <div class="modal-edit-task-wrapper_modal_form_container">
+        <label class="modal-edit-task-wrapper_modal_form_container_label">
+          Description
+        </label>
+        <textarea
+          class="modal-edit-task-wrapper_modal_form_container_description"
+          required
+          name="description"
+        >
+        </textarea>
+      </div>
+      <div class="modal-edit-task-wrapper_modal_form_container">
+        <label class="modal-edit-task-wrapper_modal_form_container_label">
+          Status
+        </label>
+        <select
+          required
+          class="modal-edit-task-wrapper_modal_form_container_widget"
+          name="status"
+        >
+          <option selected disabled></option>
+          <option>todo</option>
+          <option>in-progress</option>
+          <option>done</option>
+        </select>
+      </div>
+      <div class="modal-add-task_form_assignee">
+        <div>Assignee</div>
+        <div class="modal-add-task_form_assignee_form-control">
+          <label class="modal-edit-task-wrapper_modal_form_container_label">
+            FirstName
+          </label>
+          <input
+            class="modal-edit-task-wrapper_modal_form_container_widget"
+            required
+            name="firstName"
+          />
+        </div>
+        <div class="modal-add-task_form_assignee_form-control">
+          <label class="modal-edit-task-wrapper_modal_form_container_label">
+            LastName
+          </label>
+          <input
+            class="modal-edit-task-wrapper_modal_form_container_widget"
+            required
+            name="lastName"
+          />
+        </div>
+      </div>
+      <button type="submit">Update Task</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  import { v4 as uuidv4 } from "uuid";
+  import { type Task, tasks } from "../tasks";
+  import { updatedTaskIdState } from "../utils/updatedTaskIdState";
+
+  updatedTaskIdState.subscribe(() => {
+    const task = tasks.value.find(
+      (task) => task.id === updatedTaskIdState.value,
+    );
+
+    (document.getElementsByName("title")[1] as HTMLInputElement).value =
+      task?.title ?? "";
+
+    (document.getElementsByName("category")[1] as HTMLInputElement).value =
+      task?.category ?? "";
+
+    (
+      document.getElementsByName("description")[2] as HTMLTextAreaElement
+    ).value = task?.description ?? "";
+
+    (document.getElementsByName("status")[1] as HTMLSelectElement).value =
+      task?.status ?? "";
+
+    (document.getElementsByName("firstName")[1] as HTMLInputElement).value =
+      task?.assignee.firstName ?? "";
+
+    (document.getElementsByName("lastName")[1] as HTMLInputElement).value =
+      task?.assignee.lastName ?? "";
+  });
+
+  const modalWrapper = document.querySelector(
+    ".modal-edit-task-wrapper",
+  ) as HTMLElement;
+  document
+    .getElementById("close-modal-editting-task")
+    ?.addEventListener("click", () => {
+      modalWrapper.style.display = "none";
+    });
+
+  const submitTaskForm = document.getElementById(
+    "form-subbmiting-task-edited",
+  ) as HTMLFormElement;
+  submitTaskForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const task = tasks.value.find(
+      (task) => task.id === updatedTaskIdState.value,
+    );
+    if (!task) throw new Error("Task not found");
+
+    const formData = new FormData(submitTaskForm);
+    const taskUpdated = {
+      id: updatedTaskIdState.value,
+      title: String(formData.get("title")),
+      category: String(formData.get("category")) as Task["category"],
+      description: String(formData.get("description")),
+      status: String(formData.get("status")) as Task["status"],
+      assignee: {
+        id: task.assignee.id,
+        firstName: String(formData.get("firstName")),
+        lastName: String(formData.get("lastName")),
+      },
+    };
+
+    tasks.set([
+      ...tasks.value.filter((task) => task.id !== updatedTaskIdState.value),
+      taskUpdated,
+    ]);
+
+    modalWrapper.style.display = "none";
+  });
+</script>
+
+<style>
+  .modal-edit-task-wrapper {
+    position: absolute;
+    height: 100dvh;
+    width: 100%;
+    top: 0;
+    display: none;
+    align-content: center;
+  }
+  .modal-edit-task-wrapper_modal {
+    background-color: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    width: fit-content;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .modal-edit-task-wrapper_modal_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .modal-edit-task-wrapper_modal_form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .modal-edit-task-wrapper_modal_form_container {
+    display: flex;
+    gap: 8px;
+  }
+  .modal-edit-task-wrapper_modal_form_container_label {
+    width: 200px;
+  }
+  .modal-edit-task-wrapper_modal_form_container_description {
+    height: 300px;
+    width: 100%;
+  }
+  .modal-add-task_form_assignee {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .modal-add-task_form_assignee_form-control {
+    display: flex;
+    gap: 8px;
+  }
+  .modal-edit-task-wrapper_modal_form_container_widget {
+    width: 100%;
+  }
+  .modal-edit-task-wrapper_modal_form_container_widget {
+    width: 100%;
+  }
+</style>
