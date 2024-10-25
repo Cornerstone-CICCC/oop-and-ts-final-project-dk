@@ -73,6 +73,16 @@ function handleSearch(event: Event) {
   });
 }
 
+// Ocultar la lista de autocompletar cuando se hace clic fuera de ella
+document.addEventListener("click", (event) => {
+  const autocompleteList = document.querySelector(".autocomplete-list") as HTMLUListElement;
+  const searchBar = document.querySelector(".search-bar") as HTMLInputElement;
+
+  if (!autocompleteList.contains(event.target as Node) && event.target !== searchBar) {
+    autocompleteList.innerHTML = "";
+    autocompleteList.style.border = "none"; 
+  }
+});
 
 document.getElementById("close-modal")?.addEventListener("click", () => {
   const modal = document.getElementById("task-modal") as HTMLDivElement;
@@ -80,6 +90,5 @@ document.getElementById("close-modal")?.addEventListener("click", () => {
   const modalImage = document.getElementById("modal-image") as HTMLImageElement;
   modalImage.style.display = "none"; 
 });
-
 
 document.querySelector(".search-bar")?.addEventListener("input", handleSearch);
