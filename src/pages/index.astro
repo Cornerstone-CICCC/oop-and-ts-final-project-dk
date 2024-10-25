@@ -33,3 +33,9 @@ import Header from "../components/Header.astro";
     justify-content: space-between;
   }
 </style>
+
+<script>
+  import { changeCSS } from "../utils/changeCSS";
+
+  window.onresize = changeCSS;
+</script>
