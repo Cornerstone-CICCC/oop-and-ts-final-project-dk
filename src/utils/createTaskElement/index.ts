@@ -1,4 +1,4 @@
-import type { Task } from "../../tasks";
+import { tasks, type Task } from "../../tasks";
 import { updatedTaskIdState } from "../updatedTaskIdState";
 import { dragStart } from "./dragstart";
 import { getColorByCategory } from "./getColorByCategory";
@@ -35,8 +35,8 @@ export const createTaskElement = (task: Task) => {
   taskHeaderElement.appendChild(taskCategoryElement);
 
   const taskInteractionElement = document.createElement("div");
-  taskCategoryElement.style.display = "flex";
-  taskCategoryElement.style.gap = "4px";
+  taskInteractionElement.style.display = "flex";
+  taskInteractionElement.style.gap = "4px";
 
   const taskEditButton = document.createElement("button");
   taskEditButton.textContent = "✏️";
@@ -51,6 +51,18 @@ export const createTaskElement = (task: Task) => {
     modal.style.display = "block";
   });
   taskInteractionElement.appendChild(taskEditButton);
+
+  const tasDeleteButton = document.createElement("button");
+  tasDeleteButton.textContent = "❌";
+  tasDeleteButton.style.backgroundColor = "transparent";
+  tasDeleteButton.style.border = "none";
+  tasDeleteButton.style.cursor = "pointer";
+  tasDeleteButton.addEventListener("click", () => {
+    const taskElement = document.getElementById(task.id);
+    taskElement?.remove();
+    tasks.set([...tasks.value.filter((t) => t.id !== task.id)]);
+  });
+  taskInteractionElement.appendChild(tasDeleteButton);
 
   taskHeaderElement.appendChild(taskInteractionElement);
 
