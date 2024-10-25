@@ -45,7 +45,6 @@ export const createTaskElement = (task: Task) => {
   taskEditButton.style.cursor = "pointer";
   taskEditButton.addEventListener("click", () => {
     updatedTaskIdState.set(task.id);
-    console.log(updatedTaskIdState.value);
     const modal = document.querySelector(
       ".modal-edit-task-wrapper",
     ) as HTMLElement;
