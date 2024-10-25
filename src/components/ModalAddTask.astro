@@ -112,20 +112,16 @@ import mod from "astro/zod";
     const submitTaskForm = document.getElementById("form-subbmiting-task-added") as HTMLFormElement;
 const notificationIcon = document.getElementById("notification-icon") as HTMLImageElement;
 const notificationMessage = document.getElementById("notification-message") as HTMLDivElement;
-const taskListContainer = document.getElementById("task-list") as HTMLDivElement; // Contenedor para la lista de tareas
-
-// Arreglo para almacenar las tareas
+const taskListContainer = document.getElementById("task-list") as HTMLDivElement; 
 let taskTitles: string[] = [];
 
 submitTaskForm?.addEventListener("submit", (e) => {
   e.preventDefault();
   const formData = new FormData(submitTaskForm);
-  
-  // Cambia la imagen del icono de notificación
-  notificationIcon.src = "/images/header/notification.png"; // Cambia esta ruta a tu nueva imagen
+  notificationIcon.src = "/images/header/notification.png";
   modalWrapper.style.display = "none";
   
-  const taskTitle = String(formData.get("title")); // Obtiene el título de la tarea
+  const taskTitle = String(formData.get("title")); 
   const task = {
     id: uuidv4(),
     title: taskTitle,
@@ -141,11 +137,10 @@ submitTaskForm?.addEventListener("submit", (e) => {
 
   tasks.set([...tasks.value, task]);
 
-  // Agrega el título de la tarea al historial de tareas
   taskTitles.push(taskTitle);
 
-  // Muestra el mensaje de notificación para todas las tareas
-  taskListContainer.innerHTML = ""; // Limpia el contenedor antes de mostrar las nuevas tareas
+
+  taskListContainer.innerHTML = ""; 
   taskTitles.forEach(title => {
     const taskItem = document.createElement("div");
     taskItem.textContent = `Added task: ${title}`;
@@ -153,7 +148,7 @@ submitTaskForm?.addEventListener("submit", (e) => {
     taskItem.style.width="20vw";
     taskItem.style.textAlign="center";
     taskItem.style.padding="5px";
-    taskListContainer.appendChild(taskItem); // Agrega cada tarea al contenedor
+    taskListContainer.appendChild(taskItem); 
 
     taskItem.addEventListener("mouseover", () => {
       taskItem.style.backgroundColor = "green";
@@ -165,10 +160,10 @@ submitTaskForm?.addEventListener("submit", (e) => {
       taskItem.style.color = ""; 
     });
     taskItem.addEventListener("click", () => {
-      taskListContainer.removeChild(taskItem); // Elimina el item de la lista
-      taskTitles = taskTitles.filter(t => t !== title); // Elimina el título de la tarea del array
+      taskListContainer.removeChild(taskItem); 
+      taskTitles = taskTitles.filter(t => t !== title);
         if (taskTitles.length === 0) {
-        notificationIcon.src = "/images/header/bell.png"; // Cambia de vuelta a la imagen original
+        notificationIcon.src = "/images/header/bell.png"; 
       } else {
         notificationIcon.src = "/images/header/notification.png";
       }
@@ -176,7 +171,6 @@ submitTaskForm?.addEventListener("submit", (e) => {
   });
 });
 
-// Muestra el mensaje al hacer clic en la imagen de notificación
 notificationIcon.addEventListener("click", () => {
   if (notificationMessage.style.display === "none") {
     notificationMessage.style.display = "block";
