@@ -10,7 +10,10 @@ import { Icon } from "astro-icon/components";
         <Icon name="close" />
       </button>
     </div>
-    <form class="modal-add-task-wrapper_modal_form" id="form-subbmiting-task">
+    <form
+      class="modal-add-task-wrapper_modal_form"
+      id="form-subbmiting-task-added"
+    >
       <div class="modal-add-task-wrapper_modal_form_container">
         <label class="modal-add-task-wrapper_modal_form_container_label">
           Title
@@ -106,7 +109,7 @@ import { Icon } from "astro-icon/components";
     });
 
   const submitTaskForm = document.getElementById(
-    "form-subbmiting-task",
+    "form-subbmiting-task-added",
   ) as HTMLFormElement;
   submitTaskForm?.addEventListener("submit", (e) => {
     e.preventDefault();
